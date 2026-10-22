@@ -1,0 +1,51 @@
+# Example configuration for create_benchmark_instances.py.
+# Copy this file, edit the paths, and run:
+#   python src/novelty_eval/benchmark_data/create_benchmark_instances.py --config <your-config>.yaml
+# Every field below has a default, so anything you don't care about can be deleted.
+
+# ── Input / output ────────────────────────────────────────────────────────────
+# One or more clean novelty datasets produced by fetch_iclr_data.py (stage 1).
+iclr_data:
+  - "src/novelty_eval/benchmark_data/iclr_data/<timestamp>/iclr_2026_clean_novelty_dataset_10_percent.json"
+
+# A timestamped sub-folder is created here for each run.
+output_dir: "output/benchmark_instances/example"
+
+# ── Instance format ───────────────────────────────────────────────────────────
+# false → pairwise: num_top_papers ideas from D_+ against num_bottom_papers from D_-.
+# true  → pointwise: one idea per instance with a POSITIVE / NEGATIVE label.
+pointwise: false
+num_top_papers: 1
+num_bottom_papers: 1
+
+# ── Which papers qualify ──────────────────────────────────────────────────────
+# How many reviewers must agree on the novelty signal: null | majority | all.
+strictness: majority
+
+# Score thresholds separating the two pools. null disables a filter.
+min_pos_rating: 6.0          # D_+: well-rated papers
+min_pos_contribution: 3.0
+max_neg_rating: 3.5          # D_-: poorly rated papers
+max_neg_contribution: 2.0
+
+# ── Where the low-novelty pool comes from ─────────────────────────────────────
+# false → D_- is drawn from low-rated ICLR papers (the Human-Only setup).
+# true  → D_- is generated per research area by an LLM ideator (Human+Generated).
+llm_negatives: false
+llm_negatives_model: "claude-sonnet-4-5"
+llm_negatives_prompt: "src/novelty_eval/benchmark_data/templates/idea_generation.jinja2"
+
+# ── Abstract rewriting ────────────────────────────────────────────────────────
+# Each abstract passes through this template before it becomes an instance.
+# remove_eval_data strips results and baselines so judges cannot lean on them;
+# extract_research_plan produces the purpose/mechanism plan idea format.
+# Set model_name to null to use the abstracts as they are.
+model_name: claude-opus-4-6
+manipulation_prompt: "src/novelty_eval/benchmark_data/templates/remove_eval_data.jinja2"
+max_workers: 10
+
+# ── Optional ──────────────────────────────────────────────────────────────────
+# max_instances: 20                                  # cap the run (smoke tests)
+# derive_pointwise_from_pairwise: "data/human-only/pairwise.yaml"
+                                                     # split an existing pairwise
+                                                     # file instead of re-sampling

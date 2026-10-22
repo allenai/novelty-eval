@@ -1,0 +1,83 @@
+# ---------------------------------------------------------------------------
+# The controlled study at mec_k=1 — Human + generated track.
+#
+#   python3 src/novelty_eval/ablation/merge_ablation_runs.py \
+#       --config src/novelty_eval/ablation/configs/merge/mec_k1/vanilla.yaml
+#
+# The vanilla half of the pair; see mec_k1/hvh.yaml for what the whole thing is
+# for. Every row is an ablation merge_config_vanilla.yaml already reports,
+# rebuilt from one sample per direction instead of three, carved out of the
+# stored batch outputs by derive_subrun_artifacts.py — same calls, pooled
+# differently, no model called again.
+# ---------------------------------------------------------------------------
+
+dirs:
+  - output/ablation_sweeps/derived_mec_k1_all_vanilla
+
+output_dir: output/ablation_sweeps/merge_vanilla_mec_k1
+
+# The un-ablated run at k=1, standing in for the usual `current`, so a delta is
+# the ablation's effect at k=1 rather than that effect plus the sampling-depth
+# one. The name resolves per track, so the one key serves both setups.
+baseline: current_mec_k_1
+
+# As in merge_config_vanilla.yaml: the AI-researcher sweeps the derived runs were
+# carved from hold both tracks in one directory, so the hvh rows have to be kept
+# out or they would be measured against a vanilla baseline.
+tracks:
+  - pairwise-vanilla-ai
+  - pointwise-vanilla-ai
+
+# The same metrics merge_config_vanilla.yaml reports, so a table here can be read
+# straight against the one there. n_ties and support are not listed — they are
+# written to unified_*.json regardless, which is where the tie figure reads them.
+metrics:
+  pairwise:
+    - pairwise_accuracy
+    - pairwise_accuracy_strict
+  pointwise:
+    - f1_macro
+    - f1_pos
+    - f1_neg
+    - precision_pos
+    - precision_neg
+    - recall_pos
+    - recall_neg
+
+# Panel names are the full run names rather than the short canonical ones the
+# other merges use: `X_mec_k_1` has no entry in ablations.yaml, so the canonical
+# resolver has no track prefix to strip and leaves it on. Titles are given here
+# for the same reason — there is no YAML description to fall back on.
+#
+# This list only decides what the unified PNG draws. Every non-baseline panel
+# lands in unified_<setup>_<variant>.json either way, which is what
+# sampling_depth_figure.ipynb reads — including the three negative-generator
+# backbone rows, which are left out below because the controlled-study figure
+# does not draw them.
+unified_chart:
+  - name: pairwise-vanilla-ai_vague_criterion_mec_k_1
+    title: "Novelty Criterion | k=1"
+  - name: pairwise-vanilla-ai_no_criteria_prompt_mec_k_1
+    title: "No Criterion Prompt | k=1"
+  - name: pairwise-vanilla-ai_ai_researcher_base_mec_k_1
+    title: "AI-Researcher Prompt | k=1"
+  - name: pairwise-vanilla-ai_ai_researcher_no_review_mec_k_1
+    title: "No Review Mention | k=1"
+  - name: pairwise-vanilla-ai_ai_researcher_comparative_mec_k_1
+    title: "Comparative | k=1"
+  - name: pairwise-vanilla-ai_retrieval_mec_k_1
+    title: "Retrieval | k=1"
+  - name: pairwise-vanilla-ai_low_judge_reasoning_mec_k_1
+    title: "Reasoning Effort = Low | k=1"
+  - name: pairwise-vanilla-ai_convert_to_plan_form_pairwise_vanilla_mec_k_1
+    title: "Idea Format | k=1"
+  - name: pointwise-vanilla-ai_vague_criterion_mec_k_1
+    title: "Novelty Criterion | k=1"
+  - name: pointwise-vanilla-ai_no_criteria_prompt_mec_k_1
+    title: "No Criterion Prompt | k=1"
+  - name: pointwise-vanilla-ai_retrieval_mec_k_1
+    title: "Retrieval | k=1"
+  - name: pointwise-vanilla-ai_low_judge_reasoning_mec_k_1
+    title: "Reasoning Effort = Low | k=1"
+  - name: pointwise-vanilla-ai_convert_to_plan_form_pointwise_vanilla_mec_k_1
+    title: "Idea Format | k=1"

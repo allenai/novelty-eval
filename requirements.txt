@@ -1,0 +1,26 @@
+# Benchmark construction, retrieval, judges, ablations, figures.
+
+aiohttp
+anthropic>=0.40.0
+colorama
+httpx
+Jinja2
+matplotlib
+numpy
+openai>=1.0.0
+openpyxl
+openreview-py
+pandas
+pillow
+pyarrow
+PyYAML
+requests
+scipy
+toml
+tqdm
+
+# Notebooks (analysis/novelty_signal_table.ipynb, cost_efficiency.ipynb, playgrounds)
+ipython
+
+# Tests
+pytest

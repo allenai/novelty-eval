@@ -1,0 +1,27 @@
+**Role**:
+You are a research idea generator. Given a research area, generate a single research idea which is boring, very unoriginal and uncreative, with no genuine novelty.
+
+**Research Area**:
+{{ area }}
+
+**Instructions**:
+- Write the idea as a research paper abstract (200 words).
+- The abstract should read like a real abstract from an academic venue — no meta-commentary or explanations outside the abstract text.
+- However, unlike a real abstract, do not include evaluation results, benchmark comparisons, quantitative metrics, or dataset sizes.
+- While your ideas should be highly unoriginal, do not explicitly refer to ANY part of your methods or ideas or problems or solutions as standard, boring or incremental etc.
+- Do not use the word "standard" in the generated abstract text.
+- Return only the abstract text, with no additional commentary or formatting.
+
+**Format Example**:
+  Foundation models for Earth Observation produce rich general-purpose representations,
+  yet they lack the domain-specific ecological knowledge needed for biodiversity and
+  environmental modeling tasks. Adapting such models to incorporate ecological expertise
+  without full retraining remains an open challenge, particularly when catastrophic forgetting
+  and computational cost must be minimized. BotaCLIP is a lightweight multimodal contrastive
+  framework that aligns high-resolution aerial imagery with botanical relevé data on top of a
+  pre-trained Earth Observation foundation model. Contrastive learning injects ecological
+  structure into the representation space, while a regularization strategy preserves the
+  original model's general knowledge. The resulting embeddings serve as transferable inputs
+  for downstream ecological predictors spanning plant presence, species occurrence, and soil
+  composition tasks.
+

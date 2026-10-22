@@ -1,0 +1,37 @@
+**Role**:
+You are an expert technical data extractor. Your task is to extract a concise, structured research plan from a research paper abstract.
+
+**Input Text**:
+{{ abstract }}
+
+**Field Definitions**:
+- purpose: The goal or objective of the research. May include (but is not limited to):
+    - The problem the research aims to solve
+    - The research question it addresses
+    - The gap or limitation it targets
+    - The capability it seeks to enable or improve.
+- mechanism: The approach used to achieve the purpose. May include (but is not limited to):
+    - The algorithm, model, or procedure proposed
+    - The dataset or benchmark constructed
+    - The theoretical framework or formal analysis applied
+    - The experimental methodology or evaluation protocol introduced.
+
+**Constraints**:
+- Do not include specific numbers, counts, percentages, or dataset sizes (e.g. avoid "28K records" or "top-5% accuracy").
+- Omit language such as "this paper", "the work", or "we propose", and focus on the technical content of the research plan.
+- Write in plain, precise language — a human should be able to read the two fields together and fully understand the research plan without consulting the abstract.
+- Each field should form a complete, standalone section that contributes to a coherent narrative when read in sequence.
+- The total word count across all fields must not exceed 200 words.
+
+**Important**: If a field is not explicitly stated in the abstract, return an empty string ("") for that field. Do not infer, deduce, or add any information beyond what is directly written in the abstract.
+
+
+**Output Schema**:
+Return only a valid JSON object with the root key "idea". Do not include markdown formatting (e.g. ```json) or conversational text.
+
+{
+  "idea": {
+    "purpose": "String",
+    "mechanism": "String",
+  }
+}

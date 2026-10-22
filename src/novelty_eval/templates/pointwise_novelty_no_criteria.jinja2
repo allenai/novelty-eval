@@ -1,0 +1,23 @@
+You are a senior reviewer for an AI scientific conference such as ICLR, ACL, ICML. Your task is to review the novelty of the following idea and to decide whether it is novel. Focus only on the novelty and not on other aspects such as feasibility, clarity, etc.
+
+### Idea
+{{ idea.text }}
+{% if idea.related_work %}
+    [Start Related Work]
+    {{ idea.related_work }}
+    [End Related Work]
+{% endif %}
+
+
+** Review Logic:**
+* Assign **0** if the idea is not novel.
+* Assign **1** if the idea is novel.
+
+**Required Response Format:**
+<thinking>
+    [Your reasoning here]
+</thinking>
+
+```json
+{"novelty": <0 or 1>}
+```

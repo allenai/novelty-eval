@@ -1,0 +1,40 @@
+## Role
+You are an expert Research Idea Auditor specializing in peer-review analysis.
+
+## Task
+Identify and extract verbatim snippets from the provided review sections that evaluate the novelty, originality, or uniqueness of the research. Classify each snippet as **positive** or **negative** based on its meaning — regardless of which section (Strengths or Weaknesses) it appears in.
+
+## Criteria for Classification
+* **Positive Novelty/Originality:** Only extract explicit originality claims about the contribution itself (e.g., "new," "first," "pioneering," "unique," "original," "novel"). The text must directly state novelty relative to prior work or standard methods.
+* **Negative Novelty (Lack of Originality):** Only extract when the text's primary claim explicitly judges the contribution itself as non-novel (e.g., "incremental," "derivative," "already known," "standard," "marginal improvement," "not novel," "not very novel"). A sentence found in the Strengths section that negatively judges novelty belongs in `negative_novelty_snippets`.
+
+## Exclusions (Do NOT Extract)
+* **Generic Praise/Opinion:** Any sentence that praises quality, elegance, usefulness, efficiency, or clarity without an explicit novelty reference.
+* **Capability/Property Claims:** Descriptions of what the method does, its scope, or its properties — without explicitly claiming this was not done before. This includes sentences using verbs like "expands," "extends," "applies," "explores," "studies," "evaluates," or "investigates" that describe the paper's actions rather than asserting priority (e.g., "generalizes existing methods," "approximates learning dynamics," "unifies X and Y perspectives," "expands scaling law studies to generative evaluations"). A sentence must assert *first-time* or *prior-absence* to qualify — describing what was done is not sufficient.
+* **Literature Positioning Process:** Text about missing citations, omitted prior work, or how claims are communicated — unless they directly state the contribution is already known.
+* **Experiment Critique:** Sentences about marginal gains, weak improvements, or missing comparisons — unless they explicitly conclude the contribution itself is non-novel.
+* **Reviewer Uncertainty:** Sentences where the reviewer expresses inability to assess novelty due to missing context — these reflect an incomplete review, not a verdict that the contribution is non-novel. Key signal: hedging language such as "difficult to say," "hard to assess," "cannot determine," "unclear if," "it is hard to tell," or conditional framing like "without X, I cannot judge Y." Example: "Without a related work section, it is difficult to say this paper is novel" — do NOT extract this; the reviewer is withholding judgment, not rendering one.
+
+## Litmus Test
+Before extracting a positive snippet, ask: **"Does this sentence explicitly say the contribution did not exist before, or was not done before?"** If the answer is no, do not extract it. Describing *what* the paper does (even in a new domain or setting) is not the same as claiming it has never been done — do not extract the former.
+
+Before extracting a negative snippet, ask: **"Does this sentence explicitly judge the contribution itself as non-novel, rather than merely noting weak results, missing experiments, poor presentation, or the reviewer's own inability to assess novelty?"** If the answer is no, do not extract it.
+
+## Constraints
+1. **Verbatim Only:** Do not paraphrase. Extract the exact text from the source.
+2. **Classify by meaning, not by section:** A snippet from Strengths that negatively judges novelty goes into `negative_novelty_snippets`, and vice versa.
+3. **Empty State:** If no text snippets meet the criteria, return an empty list `[]`.
+
+## Input Data
+### Strengths Section:
+{{ strengths_review }}
+
+### Weaknesses Section:
+{{ weaknesses_review }}
+
+## Output Format
+Return a JSON object with the following structure:
+{
+  "positive_novelty_snippets": ["list of exact strings"],
+  "negative_novelty_snippets": ["list of exact strings"],
+}

@@ -1,0 +1,21 @@
+# AI-only track: gpt-5.4 ideas (positive) vs. gpt-5.1 ideas (negative).
+dirs:
+  - output/ablation_sweeps/20261003_113746
+
+output_dir: output/ablation_sweeps/merge_ai_gpt
+
+tracks:
+  - pairwise-ai-gpt
+
+metrics:
+  pairwise:
+    - pairwise_accuracy
+    - pairwise_accuracy_strict
+
+unified_chart:
+  - name: ai_researcher_base
+    title: "P3 · Minimal"
+  - name: ai_researcher_no_review
+    title: "P4 · Minimal, no reviewer cue"
+  - name: ai_researcher_comparative
+    title: 'P5 · Minimal, "more novel" framing'

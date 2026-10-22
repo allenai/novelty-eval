@@ -1,0 +1,55 @@
+# ---------------------------------------------------------------------------
+# example_sweep.yaml — the same evaluation as example_eval.yaml, run across
+# several judges and compared in one report.
+#
+# Run with:
+#   export PYTHONPATH="$PWD/src"
+#   export SECRETS="$PWD/secrets.toml"
+#   export OUTPUT_DIR="$PWD/output"
+#   python src/novelty_eval/run_benchmark_sweep.py \
+#       --config src/novelty_eval/config/example_sweep.yaml \
+#       --parallel --skip-on-error
+#
+# Each entry under `configs` becomes one run_benchmark.py run, taking
+# `base_config` and overriding whatever it names. Results land in
+# output/sweeps/<timestamp>/<name>/, with a cross-config comparison in
+# sweep_comparison_report.md alongside them.
+# ---------------------------------------------------------------------------
+
+description: "Judge backbones on the Human-Only pairwise setup"
+
+# Applied to every run below. Same fields as example_eval.yaml — see that file
+# for what each one does.
+base_config:
+  test_inputs: "data/human-only/pairwise.yaml"
+  test_mode: "pairwise"
+  reasoning_effort: "high"
+  mec_k: 3
+  n_runs: 1          # the sweep's name for `n`
+  max_workers: 50
+  use_batch_api: false
+  output_file: "accuracy_report.txt"
+  output_dir: "."    # overwritten per run; the sweep gives each its own folder
+  num_instances: 5   # drop for a full run
+
+# One entry per run. `name` becomes the output sub-directory and the row label
+# in the comparison report; every other field overrides base_config.
+configs:
+  - name: "gpt-5.1"
+    llm_engine: "gpt-5.1"
+
+  - name: "gpt-5.4"
+    llm_engine: "gpt-5.4"
+
+  - name: "claude-opus-4-6"
+    llm_engine: "claude-opus-4-6"
+
+  # Overrides are not limited to the backbone
+  # - name: "claude-opus-4-6-low-effort"
+  #   llm_engine: "claude-opus-4-6"
+  #   reasoning_effort: "low"
+
+  # Or swapping in a different data setup:
+  # - name: "gpt-5.4-human-plus-generated"
+  #   llm_engine: "gpt-5.4"
+  #   test_inputs: "data/human-plus-generated/pairwise.yaml"

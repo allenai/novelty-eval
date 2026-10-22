@@ -1,0 +1,39 @@
+# Wording for the "retrieval effect by negative generator" figure
+# (chart_two_track.py --config). Presentation only — no number changes here.
+#
+# Every cell is the effect of giving the judge related work, with the negative
+# generator held fixed: each row is measured against its OWN no-retrieval run,
+# not against a shared baseline. Draw it with --no-baseline-row --cell-before,
+# because the per-judge baseline strip assumes one baseline for the whole grid
+# and here each row starts somewhere different.
+#
+# Rows are named for the model that wrote the negatives, since that is what
+# varies down the column. A positive delta means retrieval helped that setting.
+#
+# CAVEAT FOR THE CAPTION: the baseline row's related work was retrieved months
+# before the other three and against a different search backend, so the contrast
+# between it and the rest is not purely about the negative generator.
+row_labels:
+  retrieval: "sonnet-4-5 (baseline)"
+
+  gpt_5.1_backbone_retrieval_pairwise_vanilla: "GPT-5.1"
+  gpt_5.4_backbone_retrieval_pairwise_vanilla: "GPT-5.4"
+  opus-4-5_backbone_retrieval_pairwise_vanilla: "Opus-4-5"
+
+  gpt_5.1_backbone_retrieval_pointwise_vanilla: "GPT-5.1"
+  gpt_5.4_backbone_retrieval_pointwise_vanilla: "GPT-5.4"
+  opus-4-5_backbone_retrieval_pointwise_vanilla: "Opus-4-5"
+
+track_titles: {}
+
+metrics:
+  pairwise: pairwise_accuracy
+  pointwise: f1_macro
+
+metric_labels: {}
+
+colorbar: false
+footnote: ""
+
+row_axis_label: "Negatives by"
+col_axis_label: "Judge model"

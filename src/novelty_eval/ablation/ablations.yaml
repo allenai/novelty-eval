@@ -1,0 +1,454 @@
+# ===========================================================================
+# Ablation Study Configuration
+# ===========================================================================
+# This file is the single source of truth for all ablation experiments.
+#
+# SCHEMA STRUCTURE:
+# -----------------
+# 1. shared:   YAML anchors for repeated strings (criteria, prompt paths).
+# 2. defaults: Global base settings for 'instance' creation and 'sweep' execution.
+# 3. tracks:   Track-specific baselines (e.g., 'pairwise-hvh', 'pointwise-hvh'). These
+#              inherit from defaults and define the track's anchor configuration.
+# 4. ablations: Individual experiment definitions.
+#
+# HOW TO DEFINE AN ABLATION:
+# --------------------------
+# Each ablation entry can specify:
+#   description:  Text used in reports and logs.
+#   tracks:       List of tracks to run this ablation on (e.g., [pairwise-hvh, pointwise-hvh]).
+#                 The orchestrator automatically expands these into namespaced
+#                 experiments: '{track}_{name}'.
+#   inherit_from: Optional list of other ablations to merge settings from.
+#                 Settings are merged recursively: Base -> Parent(s) -> Current.
+#   instance:     Overrides for create_benchmark_instances.py.
+#                 - Use a dictionary for specific overrides.
+#                 - Use a string (e.g. "current") to reuse instances from
+#                   another experiment in the same track.
+#                 - Use null to reuse the track baseline instances.
+#   sweep:        Overrides for run_accuracy_sweep.py.
+#                 - Use test_inputs: "__PLACEHOLDER__" if this ablation creates
+#                   its own instances.
+#   preprocess:   Optional ('strip_eval') to modify instances before the sweep.
+#   retrieve:     Optional (true) to trigger related work retrieval.
+#   openai_only:  Optional (true) to skip non-OpenAI models for this experiment.
+#   significance_alternative: Optional ("two-sided" | "less" | "greater").
+#     Controls the `alternative` parameter for scipy.stats.bootstrap (default: "two-sided").
+#     Use "less" when the ablation is expected to perform *worse* than baseline
+#     (significant if CI high < 0); use "greater" when expected to *outperform*
+#     (significant if CI low > 0).
+#
+# ===========================================================================
+
+# ---------------------------------------------------------------------------
+# Shared Constants (YAML Anchors)
+# ---------------------------------------------------------------------------
+shared:
+  # Paths to Jinja2 templates
+  templates:
+    remove_eval_data: &remove_eval_data "src/novelty_eval/benchmark_data/templates/remove_eval_data.jinja2"
+
+  vague_novelty_criterion: &vague_criterion |
+    The substantive originality of the idea, characterized by:
+    - The introduction of new frameworks, concepts, evaluations, resources or approaches absent from existing knowledge.
+    - The non-trivial synthesis of existing frameworks, concepts, evaluations, resources or approaches.
+    - The extension of established frameworks, concepts, evaluations, resources or approaches into previously unexplored problem domains.
+# ---------------------------------------------------------------------------
+# Global Defaults
+# ---------------------------------------------------------------------------
+defaults:
+  instance:
+    iclr_data:
+      - "src/novelty_eval/benchmark_data/iclr_data/20260313_161835/iclr_2026_clean_novelty_dataset_10_percent.json"
+    num_top_papers: 1
+    num_bottom_papers: 1
+    model_name: "claude-opus-4-6"
+    manipulation_prompt: *remove_eval_data
+    use_abstract_only: false
+    generate_both_versions: false
+    max_workers: 50
+    mix_topics: false
+    strictness: "majority"
+    max_instances: null
+    md_report_batch_size: 20
+    min_pos_rating: 6.0
+    max_pos_rating: null
+    min_neg_rating: null
+    max_neg_rating: 3.5
+    min_pos_contribution: 3.0
+    max_pos_contribution: null
+    min_neg_contribution: null
+    max_neg_contribution: 2.0
+
+  retrieval:
+    llm_engine: "claude-opus-4-6"
+    cutoff_date: '2025-03-01'
+    top_k_candidates: 5
+    chunk_size: 10
+    max_search_workers: 10
+    use_semantic_scholar: false
+    min_relevance_score: 0.8
+    max_contributions: 3
+    n_queries: 5
+
+  sweep:
+    n_runs: 1
+    max_workers: 100
+    anthropic_max_workers: 10
+    output_dir: "."
+    output_file: "accuracy_report.txt"
+    retrieve_related_work: false
+    use_batch_api: false
+    reasoning_effort: "high"
+    mec_k: 3
+    use_prompt_caching: true
+    # Default configs - can be overridden
+    configs:
+      - name: "gpt-5.2"
+        llm_engine: "gpt-5.2"
+
+# ---------------------------------------------------------------------------
+# Track Baselines
+# ---------------------------------------------------------------------------
+tracks:
+  pairwise-vanilla-ai:
+    instance:
+      num_bottom_papers: 1
+    sweep:
+      test_mode: "pairwise"
+      test_inputs: "data/human-plus-generated/pairwise.yaml"
+
+  pairwise-vanilla-ai-plan:
+    instance:
+      num_bottom_papers: 1
+    sweep:
+      test_mode: "pairwise"
+      test_inputs: "data/human-plus-generated/pairwise_plan.yaml"
+
+  pairwise-hvh:
+    instance:
+      num_bottom_papers: 1
+    sweep:
+      test_mode: "pairwise"
+      test_inputs: "data/human-only/pairwise.yaml"
+
+  pairwise-hvh-plan:
+    instance:
+      num_bottom_papers: 1
+    sweep:
+      test_mode: "pairwise"
+      test_inputs: "data/human-only/pairwise_plan.yaml"
+
+  pointwise-hvh:
+    instance:
+      derive_pointwise_from_track: "pairwise-hvh"
+    sweep:
+      test_mode: "pointwise"
+      test_inputs: "data/human-only/pointwise.yaml"
+
+  pointwise-vanilla-ai:
+    instance:
+      num_bottom_papers: 1
+    sweep:
+      test_mode: "pointwise"
+      test_inputs: "data/human-plus-generated/pointwise.yaml"
+
+  pairwise-ai-gpt:
+    sweep:
+      test_mode: "pairwise"
+      test_inputs: "data/ai-only/gpt/pairwise.yaml"
+
+  pairwise-ai-claude:
+    sweep:
+      test_mode: "pairwise"
+      test_inputs: "data/ai-only/claude/pairwise.yaml"
+
+# ---------------------------------------------------------------------------
+# Ablations
+# ---------------------------------------------------------------------------
+# Many ablations apply to several tracks at once.
+# run_ablations.py automatically generates '{track}_{name}' for the requested tracks.
+ablations:
+  # --- Baseline ---
+  current:
+    description: "Current"
+    group: baseline
+    legacy_names: [c4, "20260320_133004"]   # c4 = old name for the 4-way ranking baseline
+    tracks: [pairwise-hvh, pointwise-hvh, pairwise-vanilla-ai, pointwise-vanilla-ai, pairwise-ai-gpt, pairwise-ai-claude]
+
+
+  # --- Evaluation methodology ablations ---
+  vague_criterion:
+    description: "Vague novelty criterion"
+    before_description: "A more specific novelty criterion with concrete guidance."
+    group: evaluation
+    legacy_names: [c1]
+    tracks: [pairwise-hvh, pointwise-hvh, pairwise-vanilla-ai, pointwise-vanilla-ai, pairwise-ai-gpt, pairwise-ai-claude]
+
+    sweep:
+      novelty_criterion_override: *vague_criterion
+
+  unidirectional:
+    description: "Unidirectional (fwd-only, no position debiasing)"
+    before_description: "Bidirectional evaluation (+ three samples per direction) to reduce position bias."
+    group: evaluation
+    legacy_names: [c5a]
+    tracks: [pairwise-hvh, pairwise-vanilla-ai, pairwise-ai-gpt, pairwise-ai-claude]
+    sweep:
+      n_runs: 3
+      mec_k: 1
+      bidirectional: false
+
+  mec_k_1:
+    description: "Bidirectional evaluation evaluation with mec_k=1 (single sample per direction)"
+    before_description: "Bidirectional evaluation with mec_k=3 (three samples per direction) to reduce position bias."
+    group: evaluation
+    legacy_names: [c5b]
+    tracks: [pairwise-hvh, pointwise-hvh, pairwise-vanilla-ai, pointwise-vanilla-ai, pairwise-ai-gpt, pairwise-ai-claude]
+    sweep:
+      mec_k: 1
+      bidirectional: true
+
+  low_judge_reasoning:
+    description: "Judge's reasoning_effort=low"
+    before_description: "Judge's reasoning_effort='high'"
+    group: evaluation
+    legacy_names: []
+    tracks: [pairwise-hvh, pointwise-hvh, pairwise-vanilla-ai, pointwise-vanilla-ai, pairwise-ai-gpt, pairwise-ai-claude]
+    sweep:
+      reasoning_effort: "low"
+
+  no_criteria_prompt:
+    description: "Simplified judge prompt (no evaluation criteria)"
+    before_description: "Full judge prompt with detailed evaluation criteria."
+    group: evaluation
+    legacy_names: []
+    tracks: [pairwise-hvh, pointwise-hvh, pairwise-vanilla-ai, pointwise-vanilla-ai, pairwise-ai-gpt, pairwise-ai-claude]
+    sweep:
+      pairwise_judge_template: "pairwise_novelty_no_criteria.jinja2"
+      pointwise_judge_template: "pointwise_novelty_no_criteria.jinja2"
+
+
+  # --- AI researcher judge prompt variations ---
+  ai_researcher_base:
+    description: "AI-researcher judge prompt (novelty framing) --- used as a base for other AI-Researcher variations"
+    before_description: ""
+    group: evaluation
+    tracks: [ pairwise-hvh, pairwise-vanilla-ai, pairwise-vanilla-ai-plan, pairwise-hvh-plan, pairwise-ai-gpt, pairwise-ai-claude]
+    sweep:
+      pairwise_judge_template: "ai_researcher_prompts/pairwise_ai_researcher_variation.jinja2"
+
+  ai_researcher_conference_mention:
+    description: "AI-researcher judge prompt (novelty framing, no conference mention)"
+    before_description: "AI-researcher judge prompt that mentions the conference."
+    group: evaluation
+    tracks: [ pairwise-hvh, pairwise-vanilla-ai, pairwise-vanilla-ai-plan, pairwise-hvh-plan, pairwise-ai-gpt, pairwise-ai-claude ]
+    inherit_from: [ai_researcher_base]
+    sweep:
+      pairwise_judge_template: "ai_researcher_prompts/pairwise_ai_researcher_no_conference_mention.jinja2"
+
+  ai_researcher_no_review:
+    description: "AI-researcher judge prompt (novelty framing, no review mention)"
+    before_description: "AI-researcher judge prompt that mentions reviews."
+    group: evaluation
+    tracks: [ pairwise-hvh, pairwise-vanilla-ai, pairwise-vanilla-ai-plan, pairwise-hvh-plan, pairwise-ai-gpt, pairwise-ai-claude ]
+    inherit_from: [ ai_researcher_base ]
+    sweep:
+      pairwise_judge_template: "ai_researcher_prompts/pairwise_ai_researcher_no_review.jinja2"
+
+  ai_researcher_comparative:
+    description: "AI-researcher judge prompt (novelty framing, comparative)"
+    before_description: "AI-researcher judge prompt with non-comparative framing."
+    group: evaluation
+    tracks: [ pairwise-hvh, pairwise-vanilla-ai, pairwise-vanilla-ai-plan, pairwise-hvh-plan, pairwise-ai-gpt, pairwise-ai-claude ]
+    inherit_from: [ ai_researcher_base ]
+    sweep:
+      pairwise_judge_template: "ai_researcher_prompts/pairwise_ai_researcher_comparative.jinja2"
+
+  # --- Idea format ablations ---
+  convert_to_plan_form_pairwise_vanilla:
+    description: "Convert existing ideas to plan format using a post-processing step before the sweep."
+    before_description: "Idea is in abstract form (results/eval data stripped)."
+    group: idea_format
+    tracks: [ pairwise-vanilla-ai ]
+    suppress_instance_mismatch_warning: true
+    sweep:
+      test_inputs: "data/human-plus-generated/pairwise_plan.yaml"
+
+  convert_to_plan_form_pairwise_human:
+    description: "Convert existing ideas to plan format using a post-processing step before the sweep."
+    before_description: "Idea is in abstract form (results/eval data stripped)."
+    group: idea_format
+    tracks: [ pairwise-hvh ]
+    suppress_instance_mismatch_warning: true
+    sweep:
+      test_inputs: "data/human-only/pairwise_plan.yaml"
+
+  convert_to_plan_form_pointwise_human:
+    description: "Convert existing ideas to plan format using a post-processing step before the sweep."
+    before_description: "Idea is in abstract form (results/eval data stripped)."
+    group: idea_format
+    tracks: [ pointwise-hvh ]
+    suppress_instance_mismatch_warning: true
+    sweep:
+      test_inputs: "data/human-only/pointwise_plan.yaml"
+
+  convert_to_plan_form_pointwise_vanilla:
+    description: "Convert existing ideas to plan format using a post-processing step before the sweep."
+    before_description: "Idea is in abstract form (results/eval data stripped)."
+    group: idea_format
+    tracks: [ pointwise-vanilla-ai ]
+    suppress_instance_mismatch_warning: true
+    sweep:
+      test_inputs: "data/human-plus-generated/pointwise_plan.yaml"
+
+  # --- Retrieval ablations ---
+  retrieval:
+    description: "Evaluator has access to related work"
+    before_description: "Evaluator has no access to related work."
+    group: retrieval
+    tracks: [pairwise-hvh, pointwise-hvh, pairwise-vanilla-ai, pointwise-vanilla-ai]
+    retrieve: true
+    sweep:
+      retrieve_related_work: true
+
+  # --- Backbone model ablations ---
+  gpt_5.1_backbone_pairwise_vanilla:
+    description: "GPT-5.1 backbone"
+    before_description: "Baseline backbone is claude-sonnet-4-5."
+    group: backbone
+    tracks: [pairwise-vanilla-ai]
+    suppress_instance_mismatch_warning: true
+    sweep:
+      test_inputs: "data/human-plus-generated/backbone-gpt-5.1/pairwise.yaml"
+
+  gpt_5.4_backbone_pairwise_vanilla:
+    description: "GPT-5.4 backbone"
+    before_description: "Baseline backbone is claude-sonnet-4-5."
+    group: backbone
+    tracks: [ pairwise-vanilla-ai ]
+    suppress_instance_mismatch_warning: true
+    sweep:
+      test_inputs: "data/human-plus-generated/backbone-gpt-5.4/pairwise.yaml"
+
+  opus-4-5_backbone_pairwise_vanilla:
+    description: "Opus-4-5 backbone"
+    before_description: "Baseline backbone is claude-sonnet-4-5."
+    group: backbone
+    tracks: [ pairwise-vanilla-ai ]
+    suppress_instance_mismatch_warning: true
+    sweep:
+      test_inputs: "data/human-plus-generated/backbone-opus-4-5/pairwise.yaml"
+
+  gpt_5_backbone_pairwise_vanilla:
+    description: "GPT-5 backbone"
+    before_description: "Baseline backbone is claude-sonnet-4-5."
+    group: backbone
+    tracks: [ pairwise-vanilla-ai ]
+    suppress_instance_mismatch_warning: true
+    sweep:
+      test_inputs: "data/human-plus-generated/backbone-gpt-5/pairwise.yaml"
+
+
+  gpt_5.1_backbone_pointwise_vanilla:
+    description: "GPT-5.1 backbone"
+    before_description: "Baseline backbone is claude-sonnet-4-5."
+    group: backbone
+    tracks: [ pointwise-vanilla-ai ]
+    suppress_instance_mismatch_warning: true
+    sweep:
+      test_inputs: "data/human-plus-generated/backbone-gpt-5.1/pointwise.yaml"
+
+  gpt_5.4_backbone_pointwise_vanilla:
+    description: "GPT-5.4 backbone"
+    before_description: "Baseline backbone is claude-sonnet-4-5."
+    group: backbone
+    tracks: [ pointwise-vanilla-ai ]
+    suppress_instance_mismatch_warning: true
+    sweep:
+      test_inputs: "data/human-plus-generated/backbone-gpt-5.4/pointwise.yaml"
+
+  opus-4-5_backbone_pointwise_vanilla:
+    description: "Opus-4-5 backbone"
+    before_description: "Baseline backbone is claude-sonnet-4-5."
+    group: backbone
+    tracks: [ pointwise-vanilla-ai ]
+    suppress_instance_mismatch_warning: true
+    sweep:
+      test_inputs: "data/human-plus-generated/backbone-opus-4-5/pointwise.yaml"
+
+  gpt_5_backbone_pointwise_vanilla:
+    description: "GPT-5 backbone"
+    before_description: "Baseline backbone is claude-sonnet-4-5."
+    group: backbone
+    tracks: [ pointwise-vanilla-ai ]
+    suppress_instance_mismatch_warning: true
+    sweep:
+      test_inputs: "data/human-plus-generated/backbone-gpt-5/pointwise.yaml"
+
+  gpt_5.1_backbone_retrieval_pairwise_vanilla:
+    description: "gpt_5.1_backbone+retrieval"
+    before_description: "Baseline backbone is claude-sonnet-4-5; evaluator has no access to related work."
+    group: retrieval
+    tracks: [ pairwise-vanilla-ai ]
+    suppress_instance_mismatch_warning: true
+    sweep:
+      test_inputs: "data/human-plus-generated/backbone-gpt-5.1/pairwise.yaml"
+      retrieve_related_work: true
+      retrieval_cache_file: "output/iclr_test_instances/ablation/combined_retrieval/gpt_5.1_backbone/pairwise/retrieval_cache.json"
+
+  gpt_5.1_backbone_retrieval_pointwise_vanilla:
+    description: "gpt_5.1_backbone+retrieval"
+    before_description: "Baseline backbone is claude-sonnet-4-5; evaluator has no access to related work."
+    group: retrieval
+    tracks: [ pointwise-vanilla-ai ]
+    suppress_instance_mismatch_warning: true
+    sweep:
+      test_inputs: "data/human-plus-generated/backbone-gpt-5.1/pointwise.yaml"
+      retrieve_related_work: true
+      retrieval_cache_file: "output/iclr_test_instances/ablation/combined_retrieval/gpt_5.1_backbone/pointwise/retrieval_cache.json"
+
+
+
+  gpt_5.4_backbone_retrieval_pairwise_vanilla:
+    description: "gpt_5.4_backbone + retrieval"
+    before_description: "Baseline backbone is claude-sonnet-4-5; evaluator has no access to related work."
+    group: retrieval
+    tracks: [pairwise-vanilla-ai]
+    suppress_instance_mismatch_warning: true
+    sweep:
+      test_inputs: "data/human-plus-generated/backbone-gpt-5.4/pairwise.yaml"
+      retrieve_related_work: true
+      retrieval_cache_file: "output/iclr_test_instances/ablation/combined_retrieval/gpt_5.4_backbone/pairwise/retrieval_cache.json"
+
+  gpt_5.4_backbone_retrieval_pointwise_vanilla:
+    description: "gpt_5.4_backbone + retrieval"
+    before_description: "Baseline backbone is claude-sonnet-4-5; evaluator has no access to related work."
+    group: retrieval
+    tracks: [pointwise-vanilla-ai]
+    suppress_instance_mismatch_warning: true
+    sweep:
+      test_inputs: "data/human-plus-generated/backbone-gpt-5.4/pointwise.yaml"
+      retrieve_related_work: true
+      retrieval_cache_file: "output/iclr_test_instances/ablation/combined_retrieval/gpt_5.4_backbone/pointwise/retrieval_cache.json"
+
+  opus-4-5_backbone_retrieval_pairwise_vanilla:
+    description: "opus-4-5_backbone + retrieval"
+    before_description: "Baseline backbone is claude-sonnet-4-5; evaluator has no access to related work."
+    group: retrieval
+    tracks: [ pairwise-vanilla-ai ]
+    suppress_instance_mismatch_warning: true
+    sweep:
+      test_inputs: "data/human-plus-generated/backbone-opus-4-5/pairwise.yaml"
+      retrieve_related_work: true
+      retrieval_cache_file: "output/iclr_test_instances/ablation/combined_retrieval/opus-4-5_backbone/pairwise/retrieval_cache.json"
+
+  opus-4-5_backbone_retrieval_pointwise_vanilla:
+    description: "opus-4-5_backbone + retrieval"
+    before_description: "Baseline backbone is claude-sonnet-4-5; evaluator has no access to related work."
+    group: retrieval
+    tracks: [ pointwise-vanilla-ai ]
+    suppress_instance_mismatch_warning: true
+    sweep:
+      test_inputs: "data/human-plus-generated/backbone-opus-4-5/pointwise.yaml"
+      retrieve_related_work: true
+      retrieval_cache_file: "output/iclr_test_instances/ablation/combined_retrieval/opus-4-5_backbone/pointwise/retrieval_cache.json"

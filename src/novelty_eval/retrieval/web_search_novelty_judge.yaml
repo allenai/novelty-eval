@@ -1,0 +1,76 @@
+# ---------------------------------------------------------------------------
+# web_search_novelty_judge.yaml — Config for web_search_novelty_judge.py
+#
+# GPT + hosted web_search (arXiv) novelty judge: judges the idea's novelty, then
+# lists the papers it cited, grounded via Semantic Scholar. Each cache entry holds
+# both the verdict (`self_judgement`) and the cited papers (`candidates`).
+#
+# Run with:
+#   ./scripts/run_web_search_novelty_judge.sh                 # live mode
+#   ./scripts/run_web_search_novelty_judge.sh --mode submit   # submit batch
+#   ./scripts/run_web_search_novelty_judge.sh --mode collect  # collect batch
+# ---------------------------------------------------------------------------
+
+# ---------------------------------------------------------------------------
+# I/O
+# ---------------------------------------------------------------------------
+
+# Path to the test instances YAML file (required).
+test_inputs: "data/human-only/pointwise.yaml" # human-only pointwise
+
+# Output JSON cache file. Defaults to <test_inputs dir>/retrieval_cache.json if unset.
+output_file: "output/iclr_test_instances/retrieval/web_search_master/gpt-5.6_2025-03-01/master.json"
+
+# Content-addressed master store. When true, cache entries are keyed by
+# idea_identity(idea_text, cutoff_date) instead of the dataset's positional
+# problem_id, so `output_file` becomes a master store reusable across datasets:
+# run this judge once per dataset pointed at the SAME output_file and only unseen
+# idea texts (e.g. a new negative set) get retrieved. Re-key the master into each
+# dataset's expected shape (flat pointwise / nested pairwise) with
+# project_retrieval_cache.py. Set an explicit shared `output_file` above when using
+# this (don't rely on the per-dataset default path).
+content_addressed: true
+
+# ---------------------------------------------------------------------------
+# Model
+# ---------------------------------------------------------------------------
+
+llm_engine: "gpt-5.6-sol"
+
+# Reasoning effort for the Responses API call (none | low | medium | high).
+reasoning_effort: "medium"
+
+# Only retrieve papers published before this date (YYYY-MM-DD). Enforced after
+# grounding using the real arXiv/Semantic Scholar publication date.
+cutoff_date: "2025-03-01"
+
+# ---------------------------------------------------------------------------
+# Cited papers
+# ---------------------------------------------------------------------------
+
+# Number of top cited papers to keep per idea (selected by model-returned relevance_score).
+top_k_candidates: 5
+
+# Minimum relevance score to include a cited paper (0.0 = disabled).
+min_relevance_score: 0.0
+
+# Domains the web_search tool is allowed to use.
+allowed_domains:
+  - "arxiv.org"
+
+# ---------------------------------------------------------------------------
+# Performance
+# ---------------------------------------------------------------------------
+
+# Concurrency for 'live' mode (ignored by submit/collect).
+max_workers: 4
+
+# Ideas processed per async chunk (live mode); cache is saved after each chunk.
+chunk_size: 10
+
+# ---------------------------------------------------------------------------
+# Limits
+# ---------------------------------------------------------------------------
+
+# Uncomment to process only the first N instances (debugging).
+nr_examples: 3

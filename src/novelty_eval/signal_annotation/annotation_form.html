@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Novelty Signal Annotation</title>
+<style>
+:root { color-scheme: light dark; --fg:#1a1a1a; --bg:#fff; --muted:#5b6570; --line:#d8dee5; --chip:#eef1f5; --accent:#2f6fb5; }
+@media (prefers-color-scheme: dark) {
+  :root { --fg:#e6e8ea; --bg:#16181a; --muted:#9aa4ae; --line:#333a41; --chip:#262b30; --accent:#7fb0e6; }
+}
+body { font-family:-apple-system, system-ui, sans-serif; color:var(--fg); background:var(--bg);
+  line-height:1.55; margin:0; padding:1.5rem 1rem 4rem; }
+main { max-width:860px; margin:0 auto; }
+h1 { font-size:1.3rem; margin:0 0 .5rem; }
+.guide { background:var(--chip); border-radius:8px; padding:.8rem 1rem; font-size:.92rem; }
+.guide p { margin:.3rem 0; }
+.item { border:1px solid var(--line); border-radius:10px; padding:1rem; margin-top:1.2rem; }
+.item.done { border-color:var(--accent); }
+.meta { color:var(--muted); font-size:.85rem; }
+.idea { white-space:pre-wrap; font-size:.93rem; }
+.signal { border-left:3px solid var(--accent); padding:.4rem .8rem; background:var(--chip); font-size:.95rem; }
+fieldset { border:0; padding:0; margin:.7rem 0 0; }
+fieldset:disabled { opacity:.4; }
+legend { font-weight:600; font-size:.9rem; }
+label { margin-right:1rem; white-space:nowrap; }
+textarea { width:100%; box-sizing:border-box; margin-top:.6rem; font:inherit; background:var(--bg); color:var(--fg);
+  border:1px solid var(--line); border-radius:6px; padding:.4rem; }
+.footer { position:sticky; bottom:0; background:var(--bg); border-top:1px solid var(--line);
+  padding:.7rem 0; margin-top:1.5rem; display:flex; justify-content:space-between; align-items:center; }
+button { font:inherit; padding:.5rem 1rem; border-radius:8px; border:0; background:var(--accent); color:var(--bg); cursor:pointer; }
+</style>
+</head>
+<body>
+<main>
+<h1>Novelty Signal Annotation</h1>
+<div class="guide">
+  <p>Each item shows a paper abstract and a snippet from a peer review of it. Answer two questions per item.</p>
+  <p><b>1. Polarity.</b> <i>Positive</i>: the snippet says the contribution is new or original.
+    <i>Negative</i>: it says the contribution is not novel (incremental, known, close to prior work).
+    <i>Not about novelty</i>: it judges something else (results, clarity, rigor, missing experiments) or doesn't take a position.</p>
+  <p><b>2. Missing from the abstract.</b> Is what the reviewer calls novel (or not novel) missing from the abstract?
+    Answer <i>no</i> if the abstract mentions it, even if you can't tell from the abstract whether the reviewer is right.
+    Skip this question if you answered <i>not about novelty</i>.</p>  <p>Answers save in this browser. When you're done, click <b>Download answers</b> and send back the CSV.</p>
+</div>
+<div id="items"></div>
+<div class="footer"><span id="progress"></span><button id="download">Download answers</button></div>
+</main>
+
+<script type="application/json" id="data">__ITEMS__</script>
+<script>
+const ITEMS = JSON.parse(document.getElementById('data').textContent);
+const STORE = 'signal-annotation';
+const POLARITY = [['positive', 'Positive'], ['negative', 'Negative'], ['not_novelty', 'Not about novelty']];
+const MISSING =[['yes', 'Yes'], ['no', 'No']];
+
+let answers = {};
+try { answers = JSON.parse(localStorage.getItem(STORE)) || {}; } catch (e) {}
+
+function save() {
+  try { localStorage.setItem(STORE, JSON.stringify(answers)); } catch (e) {}
+  render();
+}
+
+function isDone(a) {
+  return a.polarity === 'not_novelty' || (a.polarity && a.missing_from_abstract);
+}
+
+function radios(id, field, options) {
+  return options.map(([value, text]) =>
+    `<label><input type="radio" name="${id}-${field}" data-id="${id}" data-field="${field}" value="${value}"> ${text}</label>`
+  ).join('');
+}
+
+const container = document.getElementById('items');
+ITEMS.forEach((it, i) => {
+  const card = document.createElement('div');
+  card.className = 'item';
+  card.id = it.item_id;
+  card.innerHTML = `
+    <div class="meta">${i + 1} / ${ITEMS.length} · <span class="area"></span></div>
+    <p class="idea"></p>
+    <div class="signal"></div>
+    <fieldset class="pol"><legend>1. Polarity</legend>${radios(it.item_id, 'polarity', POLARITY)}</fieldset>
+    <fieldset class="abs"><legend>2. Is what the reviewer calls novel (or not novel) missing from the abstract?</legend>${radios(it.item_id, 'missing_from_abstract', MISSING)}</fieldset>
+    <textarea placeholder="Notes (optional)" data-id="${it.item_id}" data-field="notes"></textarea>`;
+  card.querySelector('.area').textContent = it.area;
+  card.querySelector('.idea').textContent = it.idea;
+  card.querySelector('.signal').textContent = it.signal;
+  const a = answers[it.item_id] || {};
+  card.querySelectorAll('input').forEach(r => { r.checked = a[r.dataset.field] === r.value; });
+  card.querySelector('textarea').value = a.notes || '';
+  container.appendChild(card);
+});
+
+container.addEventListener('input', e => {
+  const { id, field } = e.target.dataset;
+  if (!id) return;
+  answers[id] = { ...answers[id], [field]: e.target.value };
+  save();
+});
+
+// Clicking the already-selected option clears it.
+container.addEventListener('click', e => {
+  const { id, field } = e.target.dataset;
+  if (e.target.type !== 'radio' || answers[id]?.[field] !== e.target.value) return;
+  e.target.checked = false;
+  delete answers[id][field];
+  save();
+});
+
+function render() {
+  ITEMS.forEach(({ item_id }) => {
+    const a = answers[item_id] || {};
+    const card = document.getElementById(item_id);
+    card.querySelector('.abs').disabled = a.polarity === 'not_novelty';
+    card.classList.toggle('done', !!isDone(a));
+  });
+  const done = ITEMS.filter(it => isDone(answers[it.item_id] || {})).length;
+  document.getElementById('progress').textContent = `${done} / ${ITEMS.length} done`;
+}
+
+document.getElementById('download').onclick = () => {
+  const cols = ['item_id', 'polarity', 'missing_from_abstract', 'notes'];
+  const quote = v => `"${String(v ?? '').replace(/"/g, '""')}"`;
+  const rows = ITEMS.map(({ item_id }) => {
+    const a = { item_id, ...answers[item_id] };
+    if (a.polarity === 'not_novelty') a.missing_from_abstract = '';
+    return cols.map(c => quote(a[c])).join(',');
+  });
+  const blob = new Blob([[cols.join(','), ...rows].join('\n')], { type: 'text/csv' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'answers.csv';
+  link.click();
+};
+
+render();
+</script>
+</body>
+</html>

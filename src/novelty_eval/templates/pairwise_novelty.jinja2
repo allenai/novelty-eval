@@ -1,0 +1,41 @@
+You are a senior reviewer for an AI scientific conference such as ICLR, ACL, ICML. Your task is to review the novelty of the following two ideas and to decide which one is more novel. Focus only on the novelty and not on other aspects such as feasibility, clarity, etc.
+
+### Idea-0
+{{ idea0.text }}
+{% if idea0.related_work %}
+    [Start Related Work for idea0]
+    {{ idea0.related_work }}
+    [End Related Work for idea0]
+{% endif %}
+
+### Idea-1
+{{ idea1.text }}
+{% if idea1.related_work %}
+    [Start Related Work for idea1]
+    {{ idea1.related_work }}
+    [End Related Work for idea1]
+{% endif %}
+
+
+Compare these ideas based on the following criteria:
+{% for key, desc in evaluation_criteria.items() %}
+{{ loop.index }}. {{ key|capitalize }}: {{ desc }}
+{% endfor %}
+
+**Comparative Logic:**
+* Assign **0** if the novelty of Idea-0 is superior.
+* Assign **1** if the novelty of Idea-1 is superior.
+
+**Required Response Format:**
+<thinking>
+    [Your reasoning here]
+</thinking>
+
+```json
+{
+  {% for key in evaluation_criteria.keys() %}
+  "{{ key }}": <0 or 1>{% if not loop.last %},{% endif %}
+
+  {% endfor %}
+}
+```

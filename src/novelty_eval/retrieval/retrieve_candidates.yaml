@@ -1,0 +1,83 @@
+# ---------------------------------------------------------------------------
+# retrieve_candidates.yaml — Configuration for retrieve_candidates.py
+#
+# Run with:
+#   ./scripts/run_retrieve_candidates.sh
+#   ./scripts/run_retrieve_candidates.sh --config src/novelty_eval/config/retrieve_candidates.yaml
+#
+# Any value can be overridden from the command line, e.g.:
+# ---------------------------------------------------------------------------
+
+# ---------------------------------------------------------------------------
+# I/O
+# ---------------------------------------------------------------------------
+
+# Path to the test instances YAML file (required)
+#test_inputs: "output/iclr_test_instances/pairwise_data/20260517_171954/manipulated-test2/iclr_test_instances.yaml"
+#test_inputs: "data/human-only/pairwise.yaml" #human only
+test_inputs: "data/human-plus-generated/pairwise.yaml"
+
+# Output JSON cache file.
+# Defaults to <test_inputs dir>/retrieval_cache.json if not set.
+# output_file: "output/iclr_test_instances/.../retrieval_cache.json"
+
+# ---------------------------------------------------------------------------
+# Model
+# ---------------------------------------------------------------------------
+
+llm_engine: "claude-opus-4-6"
+
+# Only retrieve papers published before this date (YYYY-MM-DD).
+cutoff_date: "2025-03-01"
+
+# ---------------------------------------------------------------------------
+# Retrieval method
+#   (default)            — paper-finder search
+#   use_semantic_scholar — Semantic Scholar paper search
+# ---------------------------------------------------------------------------
+
+use_semantic_scholar: false
+
+# Minimum relevance score to include a candidate (0.0 = disabled).
+min_relevance_score: 0.8
+
+# Number of top candidates to keep per idea.
+top_k_candidates: 5
+
+# ---------------------------------------------------------------------------
+# Query generation
+# ---------------------------------------------------------------------------
+
+# Maximum number of contribution dimensions to extract (Step 1).
+max_contributions: 3
+
+# Number of search queries to generate from the contributions (Step 2).
+n_queries: 5
+
+# ---------------------------------------------------------------------------
+# Performance
+# ---------------------------------------------------------------------------
+
+# Maximum concurrent paper search requests.
+max_search_workers: 10
+
+# Retries per query on API failure (PaperFinderAPIError). 0 = no retry.
+# search_max_retries: 3
+# Seconds to wait between retries.
+# search_retry_delay: 2.0
+
+# Re-run retrieval for cached ideas where ≥1 query failed with an API error in the
+# previous run (tracked in query_outcomes_log.json). Ensures full query diversity even
+# when the round-robin fill already reached top_k from the surviving queries.
+retry_failed_queries: true
+
+
+# Number of ideas processed per async chunk.
+chunk_size: 10
+
+# ---------------------------------------------------------------------------
+# Limits
+# ---------------------------------------------------------------------------
+
+# Uncomment to process only the first N examples (useful for debugging).
+nr_examples: null

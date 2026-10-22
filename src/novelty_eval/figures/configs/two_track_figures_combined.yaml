@@ -1,0 +1,50 @@
+# Wording for the combined-ablation figure (chart_two_track.py --config).
+#
+# Presentation only — nothing here changes a number.
+#
+# Every row is measured against the same baseline: negatives written by
+# claude-sonnet-4-5, judge without related work. So a row that names a backbone
+# reports the cost of switching who wrote the negatives, and a "+ retrieval" row
+# reports that switch AND the added related work together. Rows are ordered so
+# each combination sits directly beneath the two single changes it is made of;
+# the retrieval effect is the step between a backbone row and the one below it.
+#
+# DIRECTION: most ablations remove or degrade something, so a positive delta
+# reads as "removing this did not hurt". These rows are the exception — they
+# swap the negative generator and/or *add* related-work access — so say in the
+# caption that a negative delta here means the judge found the task harder, not
+# that a capability was removed.
+row_labels:
+  retrieval: "+ Related work (retrieval)"
+
+  gpt_5.1_backbone_pairwise_vanilla: "GPT-5.1 negatives"
+  gpt_5.1_backbone_retrieval_pairwise_vanilla: "GPT-5.1 negatives + retrieval"
+  gpt_5.4_backbone_pairwise_vanilla: "GPT-5.4 negatives"
+  gpt_5.4_backbone_retrieval_pairwise_vanilla: "GPT-5.4 negatives + retrieval"
+  opus-4-5_backbone_pairwise_vanilla: "Opus-4-5 negatives"
+  opus-4-5_backbone_retrieval_pairwise_vanilla: "Opus-4-5 negatives + retrieval"
+
+  gpt_5.1_backbone_pointwise_vanilla: "GPT-5.1 negatives"
+  gpt_5.1_backbone_retrieval_pointwise_vanilla: "GPT-5.1 negatives + retrieval"
+  gpt_5.4_backbone_pointwise_vanilla: "GPT-5.4 negatives"
+  gpt_5.4_backbone_retrieval_pointwise_vanilla: "GPT-5.4 negatives + retrieval"
+  opus-4-5_backbone_pointwise_vanilla: "Opus-4-5 negatives"
+  opus-4-5_backbone_retrieval_pointwise_vanilla: "Opus-4-5 negatives + retrieval"
+
+track_titles: {}
+
+# Only two judges ran the combined ablations, so both setups are single-metric
+# figures; the metric is not printed on the figure and must be named in the
+# caption.
+metrics:
+  pairwise: pairwise_accuracy
+  pointwise: f1_macro
+
+metric_labels: {}
+
+# Every cell prints its own numbers, so colour is redundant encoding.
+colorbar: false
+footnote: ""
+
+row_axis_label: "Negatives / retrieval"
+col_axis_label: "Judge model"

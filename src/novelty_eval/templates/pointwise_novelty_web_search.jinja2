@@ -1,0 +1,37 @@
+You are a senior reviewer for an AI scientific conference such as ICLR, ACL, ICML. Your task is to review the novelty of the following idea and to decide whether it is novel. Focus only on the novelty and not on other aspects such as feasibility, clarity, etc.
+
+Before making your judgment, use your web search tool to find ArXiv papers relevant to the given idea.
+
+### Idea
+{{ idea.text }}
+
+
+Judge this idea based on the following criteria:
+{% for key, desc in evaluation_criteria.items() %}
+{{ loop.index }}. {{ key|capitalize }}: {{ desc }}
+{% endfor %}
+
+** Review Logic:**
+* Assign **0** if the idea is not novel.
+* Assign **1** if the idea is novel.
+
+**Search Guidelines**
+Use your web search tool to find relevant arXiv papers to inform your novelty judgment.
+You are constrained to search papers before a given date: {{cutoff_date}}. Do NOT search or use any papers beyond this date. I want you to be very careful about not seeing ANY papers after {{ cutoff_date }}.  Apply guardrails to your queries as much as possible to minimize the chance of seeing any papers after the {{ cutoff_date }}.
+For keyword searches, always include an explicit date filter such as `before:{{ cutoff_date }}`. For direct arXiv lookups, only reference papers whose ID prefix encodes a date before the cutoff (e.g. `arxiv.org/abs/2503.XXXXX` for March 2025).
+If you come across a paper that appears to be the idea itself (i.e. essentially an exact match describing the same method, framing, and contributions — as if the authors uploaded their own paper for this idea to arXiv), completely ignore it and do not treat it as prior work. Like a human reviewer searching for related work who happens to stumble upon the very paper under review, you must disregard it when judging novelty.
+List all the queries you used.
+
+**Required Response Format:**
+<thinking>
+    [Your reasoning here]
+</thinking>
+
+```json
+{
+  {% for key in evaluation_criteria.keys() %}
+  "{{ key }}": <0 or 1>{% if not loop.last %},{% endif %}
+
+  {% endfor %}
+}
+```

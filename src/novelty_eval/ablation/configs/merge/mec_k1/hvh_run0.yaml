@@ -1,0 +1,74 @@
+# ---------------------------------------------------------------------------
+# The controlled study at mec_k=1, one draw — Human-only track.
+#
+#   python3 src/novelty_eval/ablation/merge_ablation_runs.py \
+#       --config src/novelty_eval/ablation/configs/merge/mec_k1/hvh_run0.yaml
+#
+# mec_k1/hvh.yaml with one sub-run per artifact instead of three, and that is
+# the whole point of it: `analysis/artifacts.py` averages an instance's outcome
+# across runs before the bootstrap sees it, so three sub-runs turn a 0/1 outcome
+# into 0, 1/3, 2/3 or 1 — a smoothed input that narrows the CI. The k=3 runs are
+# single runs with honest 0/1 outcomes, so only a single k=1 run is tested on
+# the same footing. Use this merge for anything that reads a delta or a star.
+#
+# The three-sub-run merge stays in place for what it is good at: the spread
+# across draws, which is the only direct measure of how noisy a single-sample
+# judge is. sampling_depth_figure.ipynb reads the two for those two purposes.
+# ---------------------------------------------------------------------------
+
+dirs:
+  - output/ablation_sweeps/20260430_094157        # pairwise-hvh_current  (k=3)
+  - output/ablation_sweeps/20260519_114951        # pointwise-hvh_current (k=3)
+  - output/ablation_sweeps/derived_mec_k1_run0_hvh
+  # The five cells the 2026-04-30 sweeps could not supply, derived from the
+  # reruns that replaced them in merge_config_hvh.yaml — so both depths read the
+  # same calls there too. Distinct (ablation, judge) keys from the dir above, so
+  # nothing is overridden; it only fills what was blank.
+  - output/ablation_sweeps/derived_mec_k1_run0_hvh_refill
+
+output_dir: output/ablation_sweeps/merge_hvh_mec_k1_vs_k3
+
+tracks:
+  - pairwise-hvh
+  - pointwise-hvh
+
+metrics:
+  pairwise:
+    - pairwise_accuracy
+    - pairwise_accuracy_strict
+  pointwise:
+    - f1_macro
+    - f1_pos
+    - f1_neg
+    - precision_pos
+    - precision_neg
+    - recall_pos
+    - recall_neg
+
+unified_chart:
+  - name: pairwise-hvh_vague_criterion_mec_k_1
+    title: "Novelty Criterion | k=1"
+  - name: pairwise-hvh_no_criteria_prompt_mec_k_1
+    title: "No Criterion Prompt | k=1"
+  - name: pairwise-hvh_ai_researcher_base_mec_k_1
+    title: "AI-Researcher Prompt | k=1"
+  - name: pairwise-hvh_ai_researcher_no_review_mec_k_1
+    title: "No Review Mention | k=1"
+  - name: pairwise-hvh_ai_researcher_comparative_mec_k_1
+    title: "Comparative | k=1"
+  - name: pairwise-hvh_retrieval_mec_k_1
+    title: "Retrieval | k=1"
+  - name: pairwise-hvh_low_judge_reasoning_mec_k_1
+    title: "Reasoning Effort = Low | k=1"
+  - name: pairwise-hvh_convert_to_plan_form_pairwise_human_mec_k_1
+    title: "Idea Format | k=1"
+  - name: pointwise-hvh_vague_criterion_mec_k_1
+    title: "Novelty Criterion | k=1"
+  - name: pointwise-hvh_no_criteria_prompt_mec_k_1
+    title: "No Criterion Prompt | k=1"
+  - name: pointwise-hvh_retrieval_mec_k_1
+    title: "Retrieval | k=1"
+  - name: pointwise-hvh_low_judge_reasoning_mec_k_1
+    title: "Reasoning Effort = Low | k=1"
+  - name: pointwise-hvh_convert_to_plan_form_pointwise_human_mec_k_1
+    title: "Idea Format | k=1"

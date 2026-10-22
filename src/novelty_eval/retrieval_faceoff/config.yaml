@@ -1,0 +1,51 @@
+# config.yaml — retrieval face-off driver config (novelty_eval.retrieval_faceoff.run)
+#
+# All knobs for the pipeline live here so the shell entry point stays a one-liner:
+#   ./scripts/run_retrieval_faceoff.sh submit        # sample + start retrieval
+#   ./scripts/run_retrieval_faceoff.sh poll [ROOT]   # (batch mode) collect + score
+# In live mode (use_batch_api: false) `submit` runs everything; `poll` is a no-op.
+# ROOT is the timestamped dir printed by `submit`; `poll` defaults to the latest run.
+
+# --- Datasets (the matched pointwise + pairwise instance files) ---
+pointwise: data/human-plus-generated/pointwise.yaml
+pairwise: data/human-plus-generated/pairwise.yaml
+
+# --- Paper-finder baselines to compare against (existing ablation sweeps) ---
+pointwise_sweep: output/ablation_sweeps/20260623_112217
+pairwise_sweep: output/ablation_sweeps/20260623_110753
+
+# Additional sweep dirs to score on the same subset. Rows are labelled by ablation
+# Point this at a stable --output-dir; derive defaults to a fresh derived_{timestamp}.
+extra_sweeps:
+  - output/ablation_sweeps/derived_retrieval_k1
+
+# --- Sampling ---
+n_pairs: 160
+seed: 0
+
+# --- Web-search judge ---
+# Strong, expensive model used for the web-search novelty judge.
+llm_engine: gpt-5.6-sol
+# Retrieval cutoff; MUST stay fixed across all stages (it is part of the
+# content-addressed cache id — a mismatch makes every projection lookup miss).
+cutoff: '2025-03-01'
+# Max cited papers kept per idea in the retrieval cache (hard cap after grounding,
+# date filter, and dedup). Not part of the cache id, so raising it is safe. Set high
+# (e.g. 100) to keep essentially every paper the judge returns.
+top_k_candidates: 100
+# Reasoning effort for the web-search judge's Responses API call (none | low | medium | high).
+reasoning_effort: xhigh
+# Minimum model-returned relevance_score to keep a cited paper (0.0 = disabled).
+min_relevance_score: 0.0
+# Domains the web_search tool is allowed to use.
+allowed_domains:
+  - arxiv.org
+# Web-search retrieval transport:
+#   false → synchronous "live" mode: `submit` runs the whole pipeline in one shot.
+#           Best for small debug samples. `poll` is a no-op.
+#   true  → OpenAI batch: `submit` submits and stops; `poll` collects + scores once
+#           the batch completes. Cheaper/scalable for the full run.
+use_batch_api: true
+
+# --- Output ---
+output_root: output/retrieval_faceoff

@@ -1,0 +1,142 @@
+dirs:
+  # pairwise_comparisons:
+  - output/ablation_sweeps/20260518_110534 # baseline (partial)
+  - output/ablation_sweeps/20260518_200746 # baseline (completion)
+  - output/ablation_sweeps/20260518_120606 # novelty criterion (partial)
+  - output/ablation_sweeps/20260523_161631 # novelty criterion (claude-opus-4-5) (partial)
+  - output/ablation_sweeps/20260529_131551 # claude-sonnet-4-5 low judge reasoning, plan format (partial)
+#  - output/ablation_sweeps/20260523_122935 # unidirectional (partial)
+#  - output/ablation_sweeps/20260523_130933 # mec k = 1 (partial)
+  - output/ablation_sweeps/20260523_135351 # low_judge_reasoning (partial)
+  - output/ablation_sweeps/20260523_140440/ # plan format (partial)
+#  - output/ablation_sweeps/20260523_154314 # retrieval (partial -- old)
+  - output/ablation_sweeps/20260525_192509 # gpt-5.2, gpt-5.4 low judge reasoning, plan format
+  - output/ablation_sweeps/20260525_194451 # gpt-5.2 criterion
+#  - output/ablation_sweeps/20260530_140603 # retrieval (gpt-5.1, gpt-5.4, claude-opus-4-6, claude-sonnet-4-5) -OLD: missing queries bug
+#  - output/ablation_sweeps/20260530_150449 # retrieval (claude-opus-4-5, gpt-5.2) - OLD: missing queries bug
+  - output/ablation_sweeps/20260531_132457 # gpt-5-1 backbone
+  - output/ablation_sweeps/20260531_135654 # gpt-5-4 backbone
+  - output/ablation_sweeps/20260531_143138 # opus-4-5 backbone
+  - output/ablation_sweeps/20261007_163147 # gpt-5 backbone (pairwise + pointwise)
+  - output/ablation_sweeps/20261008_062654 # gpt-5 backbone, gpt-5.4 pairwise retry (must stay after the line above: later dirs win)
+  - output/ablation_sweeps/20260623_110753 # Retrieval
+  - output/ablation_sweeps/20260608_113423 # no criteria prompt
+
+  # pointwise_comparisons:
+#  - output/ablation_sweeps/20260518_161430 # baseline (old, with tip mistake)
+#  - output/ablation_sweeps/20260518_190105 # novelty criterion (old, with tip mistake)
+  - output/ablation_sweeps/20260528_171320 # baseline (new, with tip fix)
+  - output/ablation_sweeps/20260529_112855 # novelty criterion (new, with tip fix)
+  - output/ablation_sweeps/20260525_172620 # claude-opus-4-5 low judge reasoning, plan format
+  - output/ablation_sweeps/20260529_121801 # claude-sonnet-4-5 low judge reasoning, plan format
+  - output/ablation_sweeps/20260525_180626 # gpt-5.1 low judge reasoning, plan format
+  - output/ablation_sweeps/20260525_183028 # claude-opus-4-6 low judge reasoning, plan format
+  - output/ablation_sweeps/20260525_185456 # gpt-5.2, gpt-5.4 low judge reasoning, plan format
+#  - output/ablation_sweeps/20260530_151657 # retrieval (claude-opus-4-6, claude-sonnet-4-5, gpt-5.1, gpt-5.4)- OLD: missing queries bug
+#  - output/ablation_sweeps/20260530_174346 # retrieval (claude-opus-4-5, gpt-5.2) - OLD: missing queries bug
+  - output/ablation_sweeps/20260531_144925 # gpt-5-1 backbone
+  - output/ablation_sweeps/20260531_151912 # gpt-5-4 backbone
+  - output/ablation_sweeps/20260531_153715 # opus-4-5 backbone
+  - output/ablation_sweeps/20260623_112217 # Retrieval
+  - output/ablation_sweeps/20260608_104346 # no criteria prompt
+
+
+  # sampling density ablations (pairwise + pointwise), derived using src/novelty_eval/ablation/derive_subrun_artifacts.py:
+  - output/ablation_sweeps/derived_mec_k1_uni
+#  -  output/ablation_sweeps/derived_mec_k1_uni_3_samples
+
+  # AI-Researcher prompts (pairwise)
+  - output/ablation_sweeps/20260903_145322
+  - output/ablation_sweeps/20260905_gpt54_retry
+
+tracks:
+  - pairwise-vanilla-ai
+  - pointwise-vanilla-ai
+
+
+output_dir: output/ablation_sweeps/merge_vanilla_all_metrics  # optional
+report_name: all_ablations.md                 # optional
+
+
+# Ablations to exclude from all reports and heatmaps.
+# Use the canonical name from ablations.yaml (track prefix is stripped automatically).
+#skip_ablations:
+#  - c2a
+#  - c2b
+
+# Judge models to exclude from all reports, heatmaps, and artifact dirs.
+# Use the exact model name as it appears in the artifact directory metadata.
+#exclude_models:
+#  - gpt-5.2
+#  - gpt-5.4
+#  - claude-sonnet-4-5
+
+# Metrics to show in tables and heatmaps, per setup.
+# If a setup key is absent, all its default metrics are shown.
+# pairwise keys : pairwise_accuracy, pairwise_accuracy_strict, pairwise_accuracy_no_ties, n_ties, support, cost_usd
+# pointwise keys: accuracy, f1_macro, f1_pos, f1_neg, precision_pos, precision_neg, recall_pos, recall_neg, support, cost_usd
+metrics:
+  pairwise:
+    - pairwise_accuracy
+    - pairwise_accuracy_strict
+  pointwise:
+    - f1_macro
+    - f1_pos
+    - f1_neg
+    - precision_pos
+    - precision_neg
+    - recall_pos
+    - recall_neg
+
+# Ablations to group into one unified side-by-side chart per setup.
+# Produces unified_charts/unified_pairwise.png and unified_charts/unified_pointwise.png
+# (plus *_filtered variants when a blocklist is active).
+# Panels appear in the order listed here; ablations absent from the data are skipped.
+#
+# Each entry is either:
+#   - a plain string  (uses the description from ablations.yaml as the panel title)
+#   - a {name, title} dict  (overrides the panel title with the given string)
+#
+# Example:
+#   unified_chart:
+#     - vague_criterion                     # title from ablations.yaml
+#     - name: retrieval
+#       title: "No Retrieval"              # custom panel title
+#     - low_judge_reasoning
+unified_chart:
+  - name: vague_criterion
+    title: "P1 · unguarded novelty criteria"
+  - name: no_criteria_prompt
+    title: "P2 · No novelty criteria"
+  - name: ai_researcher_base
+    title: "P3 · Minimal"
+  - name: ai_researcher_no_review
+    title: "P4 · Minimal, no reviewer cue"
+  - name: ai_researcher_comparative
+    title: 'P5 · Minimal, "more novel" framing'
+  - name: retrieval
+    title: "Retrieval"
+  - name: low_judge_reasoning
+    title: "Reasoning Effort = Low"
+  - name: mec_k_1
+    title: "One sample per direction"
+  - name: convert_to_plan_form_pairwise_vanilla
+    title: "Idea Format"
+  - name: convert_to_plan_form_pointwise_vanilla
+    title: "Idea Format"
+  - name: gpt_5.1_backbone_pairwise_vanilla
+    title: "GPT-5.1 Backbone"
+  - name: gpt_5.4_backbone_pairwise_vanilla
+    title: "GPT-5.4 Backbone"
+  - name: opus-4-5_backbone_pairwise_vanilla
+    title: "Opus-4-5 Backbone"
+  - name: gpt_5_backbone_pairwise_vanilla
+    title: "GPT-5 Backbone"
+  - name: gpt_5.1_backbone_pointwise_vanilla
+    title: "GPT-5.1 Backbone"
+  - name: gpt_5.4_backbone_pointwise_vanilla
+    title: "GPT-5.4 Backbone"
+  - name: opus-4-5_backbone_pointwise_vanilla
+    title: "Opus-4-5 Backbone"
+  - name: gpt_5_backbone_pointwise_vanilla
+    title: "GPT-5 Backbone"

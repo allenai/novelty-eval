@@ -1,0 +1,89 @@
+# ---------------------------------------------------------------------------
+# The controlled study at mec_k=1 — Human-only track.
+#
+#   python3 src/novelty_eval/ablation/merge_ablation_runs.py \
+#       --config src/novelty_eval/ablation/configs/merge/mec_k1/hvh.yaml
+#
+# Every row is an ablation merge_config_hvh.yaml already reports, rebuilt from
+# one sample per direction instead of three. derive_subrun_artifacts.py carved
+# three independent k=1 sub-runs out of the stored batch outputs, so no model
+# was called again and the k=1 and k=3 numbers come from the very same calls —
+# the only difference between the two merges is how those calls were pooled.
+#
+# `baseline:` is what makes a delta here mean anything. Measured against the k=3
+# baseline, every row would carry the sampling-depth effect on top of its own;
+# measured against current_mec_k_1, a delta is the ablation's effect *at k=1*,
+# which is the only thing comparable to the k=3 delta the paper reports.
+# ---------------------------------------------------------------------------
+
+dirs:
+  - output/ablation_sweeps/derived_mec_k1_all_hvh
+
+output_dir: output/ablation_sweeps/merge_hvh_mec_k1
+
+# The un-ablated run at k=1, standing in for the usual `current`. It is derived
+# from the same `_current` runs the k=3 baseline is, so the reference line moves
+# with the sampling depth and nothing else.
+baseline: current_mec_k_1
+
+# The derived sweep was carved from the AI-researcher sweeps too, and those hold
+# both tracks in one directory, so it also carries pairwise-vanilla-ai rows.
+# Without this they would be merged in beside the hvh ones and measured against
+# an hvh baseline. merge_config_hvh.yaml needs no such filter because its inputs
+# are track-specific; this one's are not.
+tracks:
+  - pairwise-hvh
+  - pointwise-hvh
+
+# The same metrics merge_config_hvh.yaml reports, so a table here can be read
+# straight against the one there. n_ties and support are not listed — they are
+# written to unified_*.json regardless, which is where the tie figure reads them.
+metrics:
+  pairwise:
+    - pairwise_accuracy
+    - pairwise_accuracy_strict
+  pointwise:
+    - f1_macro
+    - f1_pos
+    - f1_neg
+    - precision_pos
+    - precision_neg
+    - recall_pos
+    - recall_neg
+
+# Panel names are the full run names rather than the short canonical ones the
+# other merges use: `X_mec_k_1` has no entry in ablations.yaml, so the canonical
+# resolver has no track prefix to strip and leaves it on. Titles are given here
+# for the same reason — there is no YAML description to fall back on.
+#
+# This list only decides what the unified PNG draws. Every non-baseline panel
+# lands in unified_<setup>_<variant>.json either way, which is what
+# sampling_depth_figure.ipynb reads, so a row left out here is still available
+# to the notebook.
+unified_chart:
+  - name: pairwise-hvh_vague_criterion_mec_k_1
+    title: "Novelty Criterion | k=1"
+  - name: pairwise-hvh_no_criteria_prompt_mec_k_1
+    title: "No Criterion Prompt | k=1"
+  - name: pairwise-hvh_ai_researcher_base_mec_k_1
+    title: "AI-Researcher Prompt | k=1"
+  - name: pairwise-hvh_ai_researcher_no_review_mec_k_1
+    title: "No Review Mention | k=1"
+  - name: pairwise-hvh_ai_researcher_comparative_mec_k_1
+    title: "Comparative | k=1"
+  - name: pairwise-hvh_retrieval_mec_k_1
+    title: "Retrieval | k=1"
+  - name: pairwise-hvh_low_judge_reasoning_mec_k_1
+    title: "Reasoning Effort = Low | k=1"
+  - name: pairwise-hvh_convert_to_plan_form_pairwise_human_mec_k_1
+    title: "Idea Format | k=1"
+  - name: pointwise-hvh_vague_criterion_mec_k_1
+    title: "Novelty Criterion | k=1"
+  - name: pointwise-hvh_no_criteria_prompt_mec_k_1
+    title: "No Criterion Prompt | k=1"
+  - name: pointwise-hvh_retrieval_mec_k_1
+    title: "Retrieval | k=1"
+  - name: pointwise-hvh_low_judge_reasoning_mec_k_1
+    title: "Reasoning Effort = Low | k=1"
+  - name: pointwise-hvh_convert_to_plan_form_pointwise_human_mec_k_1
+    title: "Idea Format | k=1"

@@ -1,0 +1,87 @@
+# ---------------------------------------------------------------------------
+# example_eval.yaml — a single novelty judge, on a single released benchmark
+# file, under the paper's baseline configuration.
+#
+# Run with:
+#   export PYTHONPATH="$PWD/src"
+#   export SECRETS="$PWD/secrets.toml"
+#   export OUTPUT_DIR="$PWD/output"
+#   python src/novelty_eval/run_benchmark.py \
+#       --config src/novelty_eval/config/example_eval.yaml
+#
+# Any field below can be overridden without editing the file, e.g.
+#   --set llm_engine=gpt-5.4 --set num_instances=null
+#
+# Results land in output/accuracy_test_artifacts/<timestamp>/.
+# ---------------------------------------------------------------------------
+
+# ---------------------------------------------------------------------------
+# What to evaluate on
+# ---------------------------------------------------------------------------
+
+# One of the released files in data/. Three choices are encoded in the path:
+#   setup       human-only/ (D_- is human-authored) | human-plus-generated/ (D_- is LLM-generated)
+#   format      pairwise (which of two ideas is more novel) | pointwise (is this idea novel?)
+#   idea format <name>.yaml (free-form abstract) | <name>_plan.yaml (purpose / mechanism plan)
+# data/human-plus-generated/backbone-*/ swaps the model that generated D_-.
+test_inputs: "data/human-only/pairwise.yaml"
+
+# Must match the file above: pairwise instances carry `expected_winners`,
+# pointwise instances carry `label`.
+test_mode: "pairwise"
+
+# Cap the number of instances — 5 is enough to check the setup end to end for a
+# few cents. Set to null to evaluate the whole file.
+num_instances: 5
+
+# ---------------------------------------------------------------------------
+# The judge
+# ---------------------------------------------------------------------------
+
+# Backbones used in the paper: gpt-5.1, gpt-5.2, gpt-5.4,
+# claude-sonnet-4-5, claude-opus-4-5, claude-opus-4-6.
+llm_engine: "claude-opus-4-6"
+
+# "none" | "low" | "medium" | "high". The paper's baseline is "high"; the
+# reasoning-effort ablation lowers it to "low". Backbones that do not expose the
+# parameter (e.g. claude-sonnet-4-5) ignore it.
+reasoning_effort: "high"
+
+# Samples per decision. The paper's baseline aggregates 3.
+#   pointwise — majority vote over mec_k calls.
+#   pairwise  — mec_k samples per presentation order (so 2 * mec_k calls). Each
+#               idea scores the fraction of samples selecting it, and equal
+#               scores are recorded as a tie.
+mec_k: 3
+
+# Independent repetitions of the whole run, each writing its own
+# run_<mode>_<i>/scores.json. Reported metrics are the mean across them.
+n: 1
+
+# ---------------------------------------------------------------------------
+# Prior work access
+# ---------------------------------------------------------------------------
+# Unset (the paper's baseline) means the judge sees no related work. When set,
+# retrieved candidates are read exclusively from this cache — the judge issues
+# no live search. Build one with retrieval/retrieve_candidates.py.
+# retrieval_cache_file: "output/.../retrieval_cache.json"
+
+# ---------------------------------------------------------------------------
+# Output and concurrency
+# ---------------------------------------------------------------------------
+
+output_dir: "output"
+output_file: "accuracy_report.txt"
+
+# Instances judged in parallel. For claude-* backbones this is capped by
+# anthropic_max_workers (default 3) to stay under the concurrent-connection
+# limit — raise that instead if your rate limit allows.
+max_workers: 50
+
+# Batch API halves the cost but returns asynchronously; keep false for
+# interactive runs.
+use_batch_api: false
+
+# Point at a previous artifacts directory to regenerate its reports from the
+# saved scores.json, without re-running (or re-paying for) the judge.
+# update_report: "output/accuracy_test_artifacts/<timestamp>"

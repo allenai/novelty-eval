@@ -1,0 +1,39 @@
+dirs:
+#  - output/ablation_sweeps/20260616_143946  # ai_researcher_base, ai_researcher_prompt
+#  - output/ablation_sweeps/20260616_154825  # ai_researcher_base, ai_researcher_prompt
+#  - output/ablation_sweeps/20260616_161058  # ai_researcher_comparative_no_review, ai_researcher_comparative
+#  - output/ablation_sweeps/20260616_175538  # ai_researcher_conference_mention, ai_researcher_no_review
+#  - output/ablation_sweeps/20260622_100344 # ai_researcher_conference mention
+
+#  - output/ablation_sweeps/20260724_120203 # base, no-review, comparative, no-conference-mention -- single direction
+  - output/ablation_sweeps/20260803_095706 # base, no-review, comparative -- bidirectional
+
+output_dir: output/ablation_sweeps/merge_ai_researcher_vanilla_ai-plan
+
+# Use ai_researcher_base (the unmodified AI-researcher judge prompt) as the
+# comparison baseline instead of the default `current` (novelty-judge) run. All
+# ai_researcher_* variants are ablations of this prompt, so deltas/significance
+# are only meaningful relative to it.
+baseline: ai_researcher_base
+
+# Scope this merge to the vanilla-ai data-type. The shared ablation run dirs above
+# also hold pairwise-hvh runs; without this they'd collide with the vanilla-ai runs
+# under their shared canonical name (e.g. ai_researcher_base) and the report would
+# silently pick whichever track sorts first. Only ablations whose name starts with
+# one of these track prefixes are kept.
+tracks:
+  - pairwise-vanilla-ai-plan
+
+metrics:
+  pairwise:
+    - pairwise_accuracy
+
+unified_chart:
+  # ai_researcher_base is the baseline (see `baseline:` above), so it is the
+  # reference line here rather than a charted ablation.
+#  - name: ai_researcher_conference_mention
+#    title: "no conference mention"
+  - name: ai_researcher_no_review
+    title: "no review mention"
+  - name: ai_researcher_comparative
+    title: "comparative"

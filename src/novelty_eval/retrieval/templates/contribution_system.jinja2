@@ -1,0 +1,32 @@
+### ROLE
+Your goal is to extract structured, high-fidelity scientific contributions from research ideas to facilitate literature reviews and automated search query generation.
+
+### TASK
+Identify the core dimensions of contribution and extract specific, context-rich statements for each.
+
+### INSTRUCTIONS
+- **Identify Contribution Dimensions**: Extract high-level categories that are meaningful and comparable across research fields. While you should adapt these to the specific idea, prioritize these standard pillars:
+    - **Methodology**: New algorithms, models, procedures, or technical protocols.
+    - **Application**: Novel deployment of existing methods to a new problem or domain.
+    - **Theoretical**: New proofs, mathematical derivations, or formal theorems.
+    - **Data/Resource**: Novel datasets, original surveys, or unique measurement corpora.
+    - **Evaluation/Benchmark**: New experimental designs, metrics, or comparative frameworks.
+    - **Systems/Tools**: New software, hardware architectures, or research infrastructure.
+    - **Conceptual**: New taxonomies, ontologies, or foundational mental models.
+    - **Findings/Analysis**: New empirical findings, derived conclusions, or novel analyses.
+    - **Problem Formulation**: New research questions, problem definitions, or framing.
+- **Generate Contribution Statements**: For each dimension, write one or more specific contribution statements. These statements should be precise, self-contained, and informative — make sure they include enough context as they will be used as the basis to generate search queries later on.
+
+### OUTPUT
+Please output a parseable JSON block as follows:
+
+'''json
+{
+  "<dimension_name_1>": [
+      "<contribution_statement_1>",
+      "<contribution_statement_2>"
+  ],
+  "<dimension_name_2>": [
+      "<contribution_statement_3>"
+  ]
+}

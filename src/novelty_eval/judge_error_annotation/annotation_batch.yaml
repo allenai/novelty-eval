@@ -1,0 +1,64 @@
+# Batch config for prepare_annotation_batch.py.
+#
+# A batch is built from named groups. Each group names its own judge run, so a
+# batch can mix runs, judges and benchmarks. The script prints every group's
+# pool size and fails loudly rather than under-filling one.
+
+out_dir: output/judge_error_annotations/batch_opus_4-6_mistakes_gpt_5-4
+
+num_annotators: 2
+
+# disjoint: every annotator gets different instances, covering more of the pool
+#           but giving no measure of annotator agreement. Each group's pool must
+#           hold num_annotators x per_annotator.
+# shared:   everyone annotates the same instances with the same A/B blinding, so
+#           agreement is a direct comparison. Needs only one set per group.
+assignment: shared
+
+groups:
+#  # The cases under study: where the judge being evaluated failed. A tie counts
+#  # as a failure, so this pool includes pairs it could not separate at all.
+#  - name: mistakes
+##    run_dir: output/ablation_sweeps/20260518_110534/pairwise-vanilla-ai_current/pairwise-vanilla-ai_current-claude-sonnet-4-5 #abstracts
+#    run_dir: output/ablation_sweeps/20260529_131551/pairwise-vanilla-ai_convert_to_plan_form_pairwise_vanilla/pairwise-vanilla-ai_convert_to_plan_form_pairwise_vanilla-claude-sonnet-4-5 #plans
+#    select: mistakes
+#    per_annotator: 10
+#
+#  # Controls: instances the same judge got right, and decisively so -- the two
+#  # novelty scores must sit a full 6 apart, i.e. a 6-vs-0 call. A correct answer
+#  # reached by a hair is a poor baseline.
+#  - name: controls
+##    run_dir: output/ablation_sweeps/20260518_110534/pairwise-vanilla-ai_current/pairwise-vanilla-ai_current-claude-sonnet-4-5 # abstracts
+#    run_dir: output/ablation_sweeps/20260529_131551/pairwise-vanilla-ai_convert_to_plan_form_pairwise_vanilla/pairwise-vanilla-ai_convert_to_plan_form_pairwise_vanilla-claude-sonnet-4-5 # plans
+#    select: controls
+#    min_novelty_margin: 6
+#    per_annotator: 5
+#
+ # Hard pairs: a strong judge (opus-4-6) got these wrong, on a benchmark whose
+ # negatives were generated with a gpt-5.4 backbone. The margin keeps only the
+ # confident failures, not the pairs it abstained on.
+ - name: hard
+   run_dir: output/ablation_sweeps/20260531_135654/pairwise-vanilla-ai_gpt_5.4_backbone_pairwise_vanilla/pairwise-vanilla-ai_gpt_5.4_backbone_pairwise_vanilla-claude-opus-4-6 # abstracts, generator - gpt-5.4
+  #  run_dir: output/ablation_sweeps/20260523_140440/pairwise-vanilla-ai_convert_to_plan_form_pairwise_vanilla/pairwise-vanilla-ai_convert_to_plan_form_pairwise_vanilla-claude-opus-4-6 # plans
+   select: mistakes
+   per_annotator: 10
+
+  # # The cases under study: where the judge being evaluated failed. A tie counts
+  # # as a failure, so this pool includes pairs it could not separate at all.
+  # - name: opus-4-6-mistakes
+  #   run_dir: output/ablation_sweeps/20260518_110534/pairwise-vanilla-ai_current/pairwise-vanilla-ai_current-claude-opus-4-6
+  #   select: mistakes
+  #   per_annotator: 21
+
+
+# Each group can override where its benchmark instances come from. Left out, the
+# path is read from that run's accuracy_report.txt, which is where the judge
+# recorded what it scored against.
+# test_instances: output/iclr_test_instances/pairwise_data/.../benchmark_instances.yaml
+
+# Sampling, A/B blinding and row order. Same seed -> same batches.
+seed: 13
+
+# Optional. Names the output files and the key's annotator column.
+# Omit to get annotator_01 ... annotator_NN.
+annotator_names: [tom, peter]

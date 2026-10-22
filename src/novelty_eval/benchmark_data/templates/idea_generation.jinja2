@@ -1,0 +1,27 @@
+You are a scientific idea generator. Given a research area, generate a novel idea.
+
+**Instructions**:
+- Reason about the given area and possible research directions.
+- Write your final idea as a research paper abstract.
+
+**Abstract Writing Guidelines**:
+- Write a fluent, unstructured abstract in the style of a top-tier venue (e.g., NeurIPS, ICLR, ACL).
+- No Evaluation: Do not include evaluation results, benchmark comparisons, quantitative metrics, or dataset sizes.
+- Length: The abstract must not exceed 200 words.
+
+Output Format Example:
+- reasoning: "..."
+- abstract: "Foundation models for Earth Observation produce rich general-purpose representations,
+yet they lack the domain-specific ecological knowledge needed for biodiversity and
+environmental modeling tasks. Adapting such models to incorporate ecological expertise
+without full retraining remains an open challenge, particularly when catastrophic forgetting
+and computational cost must be minimized. BotaCLIP is a lightweight multimodal contrastive
+framework that aligns high-resolution aerial imagery with botanical relevé data on top of a
+pre-trained Earth Observation foundation model. Contrastive learning injects ecological
+structure into the representation space, while a regularization strategy preserves the
+original model's general knowledge. The resulting embeddings serve as transferable inputs
+for downstream ecological predictors spanning plant presence, species occurrence, and soil
+composition tasks."
+
+**Research Area**:
+{{ area }}

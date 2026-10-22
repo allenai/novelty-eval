@@ -1,0 +1,46 @@
+.idea/
+PLAN.md
+.DS_Store
+**/__pycache__/
+.venv/
+.venv-baselines/
+.pytest_cache/
+secrets.toml
+myenv/
+myenv-baselines/
+
+# Run artifacts
+logs/
+output/*
+reports/
+accuracy_test_artifacts/
+src/novelty_eval/accuracy_test_artifacts
+src/novelty_eval/comparative_eval_results
+src/novelty_eval/benchmark_data/iclr_data
+src/novelty_eval/benchmark_data/iclr_test_instances
+*/comparison_report.md
+
+# Locally generated configs
+src/novelty_eval/benchmark_data/dirs_config.yaml
+src/novelty_eval/config/accuracy_sweep_config.yaml
+src/novelty_eval/ablation/configs/merge/merge_config.yaml
+
+# Private tooling
+src/novelty_eval/judge_error_annotation/export_expert_annotations.py
+scripts/check_api_spend.py
+
+# Local scratch notebooks
+src/novelty_eval/figures/data_analysis.ipynb
+src/novelty_eval/figures/motivation_figure.ipynb
+src/novelty_eval/figures/fonts/
+
+# External baselines (vendored code without a redistributable license)
+src/novelty_eval/baselines/
+requirements-baselines.txt
+scripts/cluster/
+src/novelty_eval/config/accuracy_test_ai_scientist.yaml
+src/novelty_eval/config/accuracy_test_scideator.yaml
+tests/test_baseline_cost_stage.py
+tests/test_baseline_resume.py
+_typos.toml
+playground/

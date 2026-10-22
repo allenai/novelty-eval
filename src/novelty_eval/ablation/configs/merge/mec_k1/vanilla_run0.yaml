@@ -1,0 +1,63 @@
+# ---------------------------------------------------------------------------
+# The controlled study at mec_k=1, one draw — Human + generated track.
+#
+#   python3 src/novelty_eval/ablation/merge_ablation_runs.py \
+#       --config src/novelty_eval/ablation/configs/merge/mec_k1/vanilla_run0.yaml
+#
+# The vanilla half of the pair; see mec_k1/hvh_run0.yaml for why a single
+# sub-run is what the bootstrap has to be given.
+# ---------------------------------------------------------------------------
+
+dirs:
+  - output/ablation_sweeps/20260518_110534 # pairwise baseline (partial) -- k=3
+  - output/ablation_sweeps/20260518_200746 # pairwise baseline (completion) --- k=3
+  - output/ablation_sweeps/20260528_171320 # pointwise baseline (new, with tip fix) --- k=3
+  - output/ablation_sweeps/derived_mec_k1_run0_vanilla
+
+output_dir: output/ablation_sweeps/merge_vanilla_mec_k1_vs_k3
+
+
+tracks:
+  - pairwise-vanilla-ai
+  - pointwise-vanilla-ai
+
+metrics:
+  pairwise:
+    - pairwise_accuracy
+    - pairwise_accuracy_strict
+  pointwise:
+    - f1_macro
+    - f1_pos
+    - f1_neg
+    - precision_pos
+    - precision_neg
+    - recall_pos
+    - recall_neg
+
+unified_chart:
+  - name: pairwise-vanilla-ai_vague_criterion_mec_k_1
+    title: "Novelty Criterion | k=1"
+  - name: pairwise-vanilla-ai_no_criteria_prompt_mec_k_1
+    title: "No Criterion Prompt | k=1"
+  - name: pairwise-vanilla-ai_ai_researcher_base_mec_k_1
+    title: "AI-Researcher Prompt | k=1"
+  - name: pairwise-vanilla-ai_ai_researcher_no_review_mec_k_1
+    title: "No Review Mention | k=1"
+  - name: pairwise-vanilla-ai_ai_researcher_comparative_mec_k_1
+    title: "Comparative | k=1"
+  - name: pairwise-vanilla-ai_retrieval_mec_k_1
+    title: "Retrieval | k=1"
+  - name: pairwise-vanilla-ai_low_judge_reasoning_mec_k_1
+    title: "Reasoning Effort = Low | k=1"
+  - name: pairwise-vanilla-ai_convert_to_plan_form_pairwise_vanilla_mec_k_1
+    title: "Idea Format | k=1"
+  - name: pointwise-vanilla-ai_vague_criterion_mec_k_1
+    title: "Novelty Criterion | k=1"
+  - name: pointwise-vanilla-ai_no_criteria_prompt_mec_k_1
+    title: "No Criterion Prompt | k=1"
+  - name: pointwise-vanilla-ai_retrieval_mec_k_1
+    title: "Retrieval | k=1"
+  - name: pointwise-vanilla-ai_low_judge_reasoning_mec_k_1
+    title: "Reasoning Effort = Low | k=1"
+  - name: pointwise-vanilla-ai_convert_to_plan_form_pointwise_vanilla_mec_k_1
+    title: "Idea Format | k=1"

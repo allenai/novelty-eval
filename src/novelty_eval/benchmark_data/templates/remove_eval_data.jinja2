@@ -1,0 +1,29 @@
+**Role**:
+You are an expert academic editor. Your task is to produce a modified version of a research paper abstract that omits all evaluation-related information.
+
+**Input Abstract**:
+{{ abstract }}
+
+**What to Remove**:
+Remove information that validates or benchmarks the proposed method against others, including:
+- Specific datasets or benchmarks used *only* to validate the method (e.g., "we evaluate on SQuAD and GLUE").
+- Quantitative results or performance metrics (e.g., accuracy, F1, BLEU scores).
+- Comparisons to baselines or prior methods.
+- URLs or references to code repositories or supplementary materials.
+
+**What to Keep**:
+- Context, motivation, and problem statement.
+- The description of the proposed method or system.
+- Datasets, benchmarks, or analyses that **are** the main contribution (e.g., a newly introduced benchmark, a dataset curated as part of the work, or an empirical analysis that is the paper's primary goal).
+
+**Key Distinction**:
+Ask yourself — is the dataset/evaluation *serving* the contribution, or *is it* the contribution?
+- "We evaluate our model on ImageNet" → remove (validation of the method).
+- "We introduce a dataset of 10K annotated examples" → keep (the dataset is the contribution).
+- "We present the first analysis of X using Y dataset" → keep (the analysis is the contribution).
+
+**Critical Rules**:
+- Change as little as possible — preserve the original wording everywhere else.
+- The revised abstract must remain fluent and self-contained; bridge any gaps left by removed sentences naturally.
+- The result must still read like an abstract from a top-tier venue (e.g., ACL, ICLR, NeurIPS).
+- Return only the revised abstract text, with no additional commentary or formatting.

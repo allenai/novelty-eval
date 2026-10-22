@@ -1,0 +1,29 @@
+dirs:
+  - output/ablation_sweeps/20260430_094157 # baseline (abstract format) -- the reference
+  - output/ablation_sweeps/20260609_163911 # Idea format (regular prompt, plan format)
+  - output/ablation_sweeps/20260929_161409 # ai_researcher base, no-review, comparative -- plan format
+
+output_dir: output/ablation_sweeps/merge_plan_format_hvh
+
+baseline: pairwise-hvh_current
+
+# Both tracks are needed: the reference and the Idea-format run are on
+# pairwise-hvh, the prompt variants on pairwise-hvh-plan.
+tracks:
+  - pairwise-hvh
+  - pairwise-hvh-plan
+
+metrics:
+  pairwise:
+    - pairwise_accuracy
+    - pairwise_accuracy_strict
+
+unified_chart:
+  - name: convert_to_plan_form_pairwise_human
+    title: "Idea Format"
+  - name: ai_researcher_base
+    title: "P3 · Minimal (plan format)"
+  - name: ai_researcher_no_review
+    title: "P4 · Minimal, no reviewer cue (plan format)"
+  - name: ai_researcher_comparative
+    title: 'P5 · Minimal, "more novel" framing (plan format)'

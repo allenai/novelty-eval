@@ -1,0 +1,37 @@
+dirs:
+  - output/ablation_sweeps/20260518_110534 # baseline (abstract format, partial) -- the reference
+  - output/ablation_sweeps/20260518_200746 # baseline (abstract format, completion)
+  - output/ablation_sweeps/20260523_140440 # Idea format (partial)
+  - output/ablation_sweeps/20260525_192509 # Idea format: gpt-5.2, gpt-5.4 (+ low judge reasoning, skipped)
+  - output/ablation_sweeps/20260529_131551 # Idea format: claude-sonnet-4-5 (+ low judge reasoning, skipped)
+  - output/ablation_sweeps/20260929_154545 # ai_researcher base, no-review, comparative -- plan format
+
+output_dir: output/ablation_sweeps/merge_plan_format_vanilla
+
+baseline: pairwise-vanilla-ai_current
+
+# Both tracks are needed: the reference and the Idea-format runs are on
+# pairwise-vanilla-ai, the prompt variants on pairwise-vanilla-ai-plan.
+tracks:
+  - pairwise-vanilla-ai
+  - pairwise-vanilla-ai-plan
+
+# The two Idea-format dirs above also hold low-reasoning runs, which belong to
+# the main figure, not this one.
+skip_ablations:
+  - low_judge_reasoning
+
+metrics:
+  pairwise:
+    - pairwise_accuracy
+    - pairwise_accuracy_strict
+
+unified_chart:
+  - name: convert_to_plan_form_pairwise_vanilla
+    title: "Idea Format"
+  - name: ai_researcher_base
+    title: "P3 · Minimal (plan format)"
+  - name: ai_researcher_no_review
+    title: "P4 · Minimal, no reviewer cue (plan format)"
+  - name: ai_researcher_comparative
+    title: 'P5 · Minimal, "more novel" framing (plan format)'

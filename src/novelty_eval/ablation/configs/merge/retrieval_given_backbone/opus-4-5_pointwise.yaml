@@ -1,0 +1,40 @@
+# ---------------------------------------------------------------------------
+# Effect of retrieval when the negatives come from opus-4-5, holding the negative
+# generator fixed. The only difference between the two runs below is retrieval,
+# so the single delta in the report IS the retrieval effect under this backbone.
+#
+#   python3 src/novelty_eval/ablation/merge_ablation_runs.py \
+#       --config src/novelty_eval/ablation/configs/merge/retrieval_given_backbone/opus-4-5_pointwise.yaml
+#
+# `baseline:` replaces the usual `current` comparator. It is global to the merge
+# and resolves as {track}_{baseline} then {baseline}, so a pointwise override cannot
+# serve the other setup — hence one config per (backbone, setup).
+# ---------------------------------------------------------------------------
+
+dirs:
+  - output/ablation_sweeps/20260531_153715 # opus-4-5 backbone, no retrieval -> comparator
+  - output/ablation_sweeps/20260811_103311 # opus-4-5 backbone + retrieval
+
+baseline: opus-4-5_backbone_pointwise_vanilla
+
+output_dir: output/ablation_sweeps/retrieval_given_opus-4-5_pointwise
+report_name: retrieval_given_opus-4-5_pointwise.md
+
+# Kept identical to merge_config_combined.yaml so the deltas are comparable.
+exclude_models:
+  - gpt-5.2
+  - gpt-5.1
+  - claude-sonnet-4-5
+  - claude-opus-4-5
+
+metrics:
+  pointwise:
+    - f1_macro
+    - f1_pos
+    - f1_neg
+
+# One panel: this merge holds a single subject, so the unified chart mirrors the
+# per-ablation impact figure. Kept for a consistent output layout across merges.
+unified_chart:
+  - name: opus-4-5_backbone_retrieval_pointwise_vanilla
+    title: "Retrieval | Opus-4-5 negatives"

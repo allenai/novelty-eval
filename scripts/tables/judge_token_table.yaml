@@ -1,0 +1,39 @@
+# Config for scripts/judge_token_table.py
+#
+# Reproduces the AI-researcher prompt-variation token table (standardized /
+# plan-format instances). Swap `groups` to point at the non-standardized merges
+# to get the abstract-format numbers.
+
+models:
+  - gpt-5.4
+  # - claude-opus-4-6   # no extended thinking: output is a constant ~10 tok/call
+
+style: full          # full | slide
+split_correct: true  # mean output tokens for correct vs wrong decisions
+
+variants:
+  - {name: ai_researcher_base,               label: base}
+  - {name: ai_researcher_conference_mention, label: no conference mention}
+  - {name: ai_researcher_no_review,          label: no review mention}
+  - {name: ai_researcher_comparative,        label: comparative}
+
+groups:
+  - label: Human+AI
+    artifacts: output/ablation_sweeps/merge_ai_researcher_vanilla_ai-plan/artifacts
+    prefix: pairwise-vanilla-ai-plan_
+    instances: data/human-plus-generated/pairwise_plan.yaml
+
+  - label: Human-only
+    artifacts: output/ablation_sweeps/merge_ai_researcher_hvh-plan/artifacts
+    prefix: pairwise-hvh-plan_
+    instances: data/human-only/pairwise_plan.yaml
+
+# Non-standardized (abstract-format) equivalents:
+#
+# groups:
+#   - label: Human+AI
+#     artifacts: output/ablation_sweeps/merge_ai_researcher_vanilla_ai/artifacts
+#     prefix: pairwise-vanilla-ai_
+#   - label: Human-only
+#     artifacts: output/ablation_sweeps/merge_test_ai_researcher_hvh/artifacts
+#     prefix: pairwise-hvh_

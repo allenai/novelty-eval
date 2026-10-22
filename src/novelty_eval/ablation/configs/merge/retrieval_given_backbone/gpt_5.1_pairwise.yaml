@@ -1,0 +1,39 @@
+# ---------------------------------------------------------------------------
+# Effect of retrieval when the negatives come from gpt_5.1, holding the negative
+# generator fixed. The only difference between the two runs below is retrieval,
+# so the single delta in the report IS the retrieval effect under this backbone.
+#
+#   python3 src/novelty_eval/ablation/merge_ablation_runs.py \
+#       --config src/novelty_eval/ablation/configs/merge/retrieval_given_backbone/gpt_5.1_pairwise.yaml
+#
+# `baseline:` replaces the usual `current` comparator. It is global to the merge
+# and resolves as {track}_{baseline} then {baseline}, so a pairwise override cannot
+# serve the other setup — hence one config per (backbone, setup).
+# ---------------------------------------------------------------------------
+
+dirs:
+  - output/ablation_sweeps/20260531_132457 # gpt_5.1 backbone, no retrieval -> comparator
+  - output/ablation_sweeps/20260810_100339 # gpt_5.1 backbone + retrieval
+
+baseline: gpt_5.1_backbone_pairwise_vanilla
+
+output_dir: output/ablation_sweeps/retrieval_given_gpt_5.1_pairwise
+report_name: retrieval_given_gpt_5.1_pairwise.md
+
+# Kept identical to merge_config_combined.yaml so the deltas are comparable.
+exclude_models:
+  - gpt-5.2
+  - gpt-5.1
+  - claude-sonnet-4-5
+  - claude-opus-4-5
+
+metrics:
+  pairwise:
+    - pairwise_accuracy
+    - pairwise_accuracy_strict
+
+# One panel: this merge holds a single subject, so the unified chart mirrors the
+# per-ablation impact figure. Kept for a consistent output layout across merges.
+unified_chart:
+  - name: gpt_5.1_backbone_retrieval_pairwise_vanilla
+    title: "Retrieval | GPT-5.1 negatives"
