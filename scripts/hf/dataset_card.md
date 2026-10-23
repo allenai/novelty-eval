@@ -197,6 +197,17 @@ using the prompt templates published in the
 | `title*` of human ideas, `iclr_area`, `rating*`, `contribution*` | OpenReview | — |
 | `title*` of generated ideas, `label*`, `expected_winner`, `idea_source*`, `id` | Assigned by our pipeline | — |
 
+## OpenReview attribution
+
+The `positive_signals*` and `negative_signals*` fields are excerpts from official reviews of
+ICLR 2026 submissions, obtained from [OpenReview](https://openreview.net) and licensed under
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). They are excerpts, not full
+reviews: each is a sentence or short passage copied verbatim from a review's Strengths or
+Weaknesses section.
+
+Reviews on OpenReview are anonymous. This dataset contains no reviewer names or other
+reviewer metadata.
+
 ## License
 
 This dataset is licensed under ODC-BY 1.0. It is intended for research and educational use in accordance with Ai2's [Responsible Use Guidelines](https://allenai.org/responsible-use).

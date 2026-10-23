@@ -122,3 +122,14 @@ using the prompt templates in
 | `annotation`, `annotation_reasoning` in `judge_errors.csv` | Human expert | — |
 | `metadata.title` of human ideas, `context`, `metadata.rating`, `metadata.contribution` | OpenReview | — |
 | `metadata.title` of generated ideas, `label`, `metadata.type`, `expected_winners` | Assigned by our pipeline | — |
+
+## OpenReview attribution
+
+`metadata.positive_signals` and `metadata.negative_signals` are excerpts from official reviews
+of ICLR 2026 submissions, obtained from [OpenReview](https://openreview.net) and licensed under
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). They are excerpts, not full
+reviews: each is a sentence or short passage copied verbatim from a review's Strengths or
+Weaknesses section.
+
+Reviews on OpenReview are anonymous. These files contain no reviewer names or other
+reviewer metadata.
