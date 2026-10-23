@@ -1,0 +1,11 @@
+The data in this directory is licensed under the Open Data Commons Attribution License
+(ODC-BY) v1.0: https://opendatacommons.org/licenses/by/1-0/
+
+The rest of this repository (code) is licensed under Apache 2.0; see ../LICENSE.
+
+The reviewer excerpts (metadata.positive_signals, metadata.negative_signals) come from
+OpenReview (https://openreview.net) under CC BY 4.0; keep that attribution when
+redistributing them.
+
+Some fields are outputs of Anthropic and OpenAI models (see README.md) and may also be
+subject to Anthropic's and OpenAI's terms.

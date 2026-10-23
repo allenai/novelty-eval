@@ -2,7 +2,7 @@
 
 [![Arxiv](https://img.shields.io/badge/Arxiv-2610.02022-red?style=flat-square&logo=arxiv&logoColor=white)](https://arxiv.org/abs/2610.02022)
 [![Python Versions](https://img.shields.io/badge/Python-3.12-blue.svg?style=flat&logo=python&logoColor=white)](https://www.python.org/)
-[![Data](https://img.shields.io/badge/%F0%9F%A4%97%20Data-Here-yellow?style=flat-square)](https://huggingface.co/datasets/noystl/novelty-judge-bench)
+[![Data](https://img.shields.io/badge/%F0%9F%A4%97%20Data-Here-yellow?style=flat-square)](https://huggingface.co/datasets/allenai/novelty-judge-bench)
 
 <!-- [![Project Page](https://img.shields.io/badge/Project%20Page-Here-green?style=flat-square&logo=github)](https://noy-sternlicht.github.io/Novelty-Evaluation-Web/) -->
 
@@ -37,6 +37,7 @@ Not well. We present a systematic controlled study of novelty evaluation design 
     - [Controlled study](#controlled-study)
     - [Retrieval's limitations](#retrievals-limitations)
     - [Dedicated novelty judges](#dedicated-novelty-judges)
+  - [License](#license)
   - [Authors](#authors)
   - [Cite us!](#cite-us)
 <!-- TOC -->
@@ -121,12 +122,12 @@ and in two idea formats:
 
 ### 🤗 Hugging Face
 
-Code in this repo is designed to work with the YAML files in `data`, but we also release the same instances on the Hub: [noystl/novelty-judge-bench](https://huggingface.co/datasets/noystl/novelty-judge-bench).
+Code in this repo is designed to work with the YAML files in `data`, but we also release the same instances on the Hub: [allenai/novelty-judge-bench](https://huggingface.co/datasets/allenai/novelty-judge-bench).
 
 ```python
 from datasets import load_dataset
 
-ds = load_dataset("noystl/novelty-judge-bench", "human-plus-generated_pointwise", split="test")
+ds = load_dataset("allenai/novelty-judge-bench", "human-plus-generated_pointwise", split="test")
 ```
 
 ### Expert Annotation of Judge Errors
@@ -205,6 +206,12 @@ We ran [AI-Scientist](https://arxiv.org/abs/2408.06292) and [Idea-Novelty-Checke
 [cost_efficiency.ipynb](src/novelty_eval/figures/cost_efficiency.ipynb) draws the cost vs. macro-F1 figures and the pointwise results table. Point it at your run directories first.
 
 A file-by-file map of the codebase lives in [src/novelty_eval/README.md](src/novelty_eval/README.md).
+
+## License
+
+The code is licensed under [Apache 2.0](LICENSE). The data in [`data/`](data/) is licensed
+under [ODC-BY 1.0](data/LICENSE); see [data/README.md](data/README.md#license) for the OpenReview
+attribution and model-output terms that apply to it.
 
 ## Authors
 

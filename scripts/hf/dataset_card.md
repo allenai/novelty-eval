@@ -223,7 +223,14 @@ blocklist so that rebuilding the benchmark does not bring it back.
 
 ## License
 
-This dataset is licensed under ODC-BY 1.0. It is intended for research and educational use in accordance with Ai2's [Responsible Use Guidelines](https://allenai.org/responsible-use).
+This dataset is licensed under [ODC-BY 1.0](https://opendatacommons.org/licenses/by/1-0/). It is intended for research and educational use in accordance with Ai2's [Responsible Use Guidelines](https://allenai.org/responsible-use).
+
+The reviewer excerpts come from OpenReview under CC BY 4.0 (see
+[OpenReview attribution](#openreview-attribution)); keep that attribution when redistributing them.
+
+Some fields are outputs of Anthropic and OpenAI models (see
+[Model-generated content](#model-generated-content)) and may also be subject to Anthropic's and
+OpenAI's terms.
 
 ## Authors
 

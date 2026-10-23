@@ -39,7 +39,7 @@ mechanism) and are the idea-format ablation.
 
 ### 🤗 Hugging Face
 These files are also released on the Hub as
-[noystl/novelty-judge-bench](https://huggingface.co/datasets/noystl/novelty-judge-bench)
+[allenai/novelty-judge-bench](https://huggingface.co/datasets/allenai/novelty-judge-bench)
 
 ## Expert annotations
 
@@ -146,6 +146,16 @@ names.
 If you are an author of a paper in these files and would like it removed, email the first
 author (see [Authors](../README.md#authors)) with the paper's forum ID. We will remove every
 instance that contains the paper from these files and from the
-[Hugging Face dataset](https://huggingface.co/datasets/noystl/novelty-judge-bench), and add its
+[Hugging Face dataset](https://huggingface.co/datasets/allenai/novelty-judge-bench), and add its
 title to [paper_blocklist.yaml](../src/novelty_eval/benchmark_data/paper_blocklist.yaml) so that
 rebuilding the benchmark does not bring it back.
+
+## License
+
+The files in this directory are licensed under
+[ODC-BY 1.0](https://opendatacommons.org/licenses/by/1-0/) (see [LICENSE](LICENSE)); the code
+in the rest of the repository is under Apache 2.0. The reviewer excerpts come from OpenReview
+under CC BY 4.0 (see [OpenReview attribution](#openreview-attribution)); keep that attribution
+when redistributing them. Some fields are outputs of Anthropic and OpenAI models (see
+[Model-generated content](#model-generated-content)) and may also be subject to Anthropic's and
+OpenAI's terms.
