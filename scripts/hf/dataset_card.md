@@ -137,6 +137,66 @@ print(ds[0]["idea"], ds[0]["label"])
 Idea order within each pair is randomized, so always picking the same position scores close
 to chance (see the A/B split in [Configs at a glance](#configs-at-a-glance)).
 
+## Intended use
+
+This dataset is for **evaluating novelty judges**: measuring how well an automatic judge
+(e.g., a prompted LLM) tells more novel research ideas from less novel ones. It is a small
+test set with a single `test` split. It is not training data and should not be used to train
+or fine-tune models.
+
+## Model-generated content
+
+Parts of this dataset were produced by proprietary models from Anthropic (Claude) and OpenAI (GPT).
+
+### Models and their roles
+
+| Model | Provider | Role in the paper | Output in this release | Volume |
+|---|---|---|---|---|
+| Claude Sonnet 4.5 | Anthropic | Idea generator; judge | `D_-` ideas of `human-plus-generated_*` | 154 ideas |
+| Claude Opus 4.5 | Anthropic | Idea generator; judge | `D_-` ideas of `*_backbone-opus-4-5` | 154 ideas |
+| GPT-5 | OpenAI | Idea generator | `D_-` ideas of `*_backbone-gpt-5` | 154 ideas |
+| GPT-5.1 | OpenAI | Idea generator; judge | `D_-` ideas of `*_backbone-gpt-5.1` | 154 ideas |
+| GPT-5.4 | OpenAI | Idea generator; judge | `D_-` ideas of `*_backbone-gpt-5.4` | 154 ideas |
+| Claude Opus 4.6 | Anthropic | Data processing and labeling; judge | Edited human abstracts; plan-form rewrites; selection of reviewer excerpts | 299 abstracts; 453 plans; 1,192 excerpts |
+| GPT-5.2 | OpenAI | Judge | None | — |
+| GPT-5.6 | OpenAI | Judge (web-search retrieval experiment) | None | — |
+
+No judge outputs are part of this release: no verdicts, prompt/response logs, reasoning traces,
+or retrieval transcripts.
+
+**Authorization status:** none required; evaluation use.
+
+### Collection method
+
+All model outputs were collected through the providers' APIs (Anthropic API, OpenAI API),
+using the prompt templates published in the
+[code repository](https://github.com/allenai/novelty-eval/tree/main/src/novelty_eval/benchmark_data/templates).
+
+* **Generated ideas** — the generator receives only an ICLR primary area and is asked to propose
+  a novel research idea as an abstract, with no scaffold, literature access, or tools. Each
+  generated idea is one model response.
+* **Edited abstracts** — each human abstract is passed once through a prompt that removes
+  results, baselines, and evaluation datasets and otherwise keeps the original wording.
+* **Plan-form ideas** (`*_plan` configs) — each abstract-form idea, human or generated, is
+  rewritten into a two-field *purpose* / *mechanism* plan.
+* **Reviewer excerpts** — the model is given the Strengths and Weaknesses sections of each
+  official review and copies out, verbatim, the sentences that judge the paper's novelty. The
+  model selects the excerpts; the text is the reviewer's.
+* **Labels** — `POSITIVE` / `NEGATIVE` are assigned by fixed rules over reviewer scores,
+  decisions, and the selected excerpts (see [Setups](#setups)); generated ideas are `NEGATIVE`
+  by construction. No model assigns labels directly.
+
+### Which fields are AI-generated
+
+| Field | Origin | Model |
+|---|---|---|
+| `idea` / `idea_a` / `idea_b`, where `idea_source` is `generated` | Model-generated | Claude Sonnet 4.5, or the model named in the `_backbone-*` config |
+| `idea` / `idea_a` / `idea_b`, where `idea_source` is `human` (abstract configs) | Human abstract, edited by a model | Claude Opus 4.6 |
+| `idea` / `idea_a` / `idea_b` in `*_plan` configs | Model rewrite of the abstract-form idea | Claude Opus 4.6 |
+| `positive_signals*`, `negative_signals*` | Verbatim reviewer text, selected by a model | Claude Opus 4.6 (selection only) |
+| `title*` of human ideas, `iclr_area`, `rating*`, `contribution*` | OpenReview | — |
+| `title*` of generated ideas, `label*`, `expected_winner`, `idea_source*`, `id` | Assigned by our pipeline | — |
+
 ## License
 
 This dataset is licensed under ODC-BY 1.0. It is intended for research and educational use in accordance with Ai2's [Responsible Use Guidelines](https://allenai.org/responsible-use).
