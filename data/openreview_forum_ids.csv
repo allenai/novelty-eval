@@ -1,0 +1,300 @@
+title,forum_id
+A Framework for Sample and Objective Forgetting: Pull-to-Outlier & Contrastive Objective-level (POCO) Unlearning,62nHvQRfaw
+A New Efficient Method For Combining Gradients Of Different Orders,yX1Nn63DwQ
+A Recovery Guarantee for Sparse Neural Networks,6UpstNltZ4
+A Scalable Distributed Framework for Multimodal GigaVoxel Image Registration,8dLexnao2h
+A Single Character Can Make or Break your LLM Evals,aw3UYrrt3X
+A Study on PAVE Specification for Learnware,JkKkquv5lw
+A Survey of Optimizing ICU Sepsis Treatment Techniques in Reinforcement Learning,yDDmqLyS8F
+"A Unification of Discrete, Gaussian, and Simplicial Diffusion",1taAXRcm21
+A dimensional R2 regression metric,iD6ZD5wE1n
+AEGIS: Authentic Edge Growth In Sparsity for Link Prediction in Edge-Sparse Bipartite Knowledge Graphs,aMciux4VKg
+AGENTCON: PRACTICAL ATTACKS ON GENERALIST WEB AGENTS VIA IMPERCEPTIBLE MANIPULATION,AMIb7RWnBI
+ALS-LoRA: Improved Low-Rank Matrix Compesation Method for Low Bit Quantization,ab4wG3EjnQ
+ATTENTION-GUIDED DEEP ADVERSARIAL TEMPORAL SUBSPACE CLUSTERING FOR MULTIVARIATE SPATIOTEMPORAL DATA,NMz8o7MZ56
+AU-Harness: An Open-Source Toolkit for Holistic Evaluation of AudioLLMs,3eoCXVxvbZ
+Accelerating Optimization and Machine Learning via Decentralization,UkiGZBRZmg
+Adaptable Symbolic Music Infilling with MIDI-RWKV,lFn1Bb1ZMD
+Advancing Equitable AI: A Comprehensive Framework for Individual Fairness Assessment,zmYx32SSOR
+Alice: An Interpretable Neural Architecture for Generalization in Substitution Ciphers,5Y3GYuRWsi
+Aligning Collaborative View Recovery and Tensorial Subspace Learning via Latent Representation for Incomplete Multi-View Clustering,a5aRjldX9l
+Amortized Bayesian Meta-Learning for Low-Rank Adaptation of Large Language Models,Wr1IDzjttB
+Assembling the Mind's Mosaic: Towards EEG Semantic Intent Decoding,8OgJ2uhiu8
+AsymPuzl: An asymmetric puzzle for multi-agent cooperation,Uft46u0GRx
+Attack-Resistant Watermarking for AIGC Image Forensics via Diffusion-based Semantic Deflection,wyucYNGPiW
+Attend or Perish: Benchmarking Attention on Algorithmic Reasoning,jHPCXOi9LU
+AudioTrust: Benchmarking The Multifaceted Trustworthiness of Audio Large Language Models,E823AY0taq
+AutoEP: LLMs-Driven Automation of Hyperparameter Evolution for Metaheuristic Algorithms,hit3hGBheP
+Automatic Image-Level Morphological Trait Annotation for Organismal Images,oFRbiaib5Q
+BANZ-FS: BANZSL Fingerspelling Dataset,GMR9BUsPbq
+BIRD-INTERACT: Re-imagining Text-to-SQL Evaluation via Lens of Dynamic Interactions,nHrYBGujps
+Balancing the False Positive-Negative tradeoff to enhance Image Segmentation,5BS1VPlzBR
+Benchmarking Open-ended Segmentation,QSmwRnw8GP
+Beyond Hearing: Learning Task-Agnostic ExG Representations from Earphones via Physiology-Informed Tokenization,s79tJrxDmt
+Beyond Linear Probes: Dynamic Safety Monitoring for Language Models,AGWa8whf92
+BioCoref: Benchmarking Biomedical Coreference Resolution with LLMs,hFixHMwX1D
+Boosting Language Model Fine-Tuning via Zeroth-Order Hybrid Methods with Additional  Memory Aid,EjH5I9ziug
+BotaCLIP: Contrastive Learning for Botany-Aware Representation of Earth Observation Data,OOebHJcqgR
+Byzantine-Robust Federated Learning with Learnable Aggregation Weights,lXSrulux48
+CAPL: Graph Few-Shot Class-Incremental Learning Via Class-Adaptive Prototype Learning,B6t4qcdmM0
+CARE: Towards Clinical Accountability in Multi-Modal Medical Reasoning with an Evidence-Grounded Agentic Framework,whRAOJiyHM
+CardioBench: Do Echocardiography Foundation Models Generalize Beyond the Lab?,CX35pnGzht
+Characterization and Learning of Causal Graphs with Latent Confounders and Post-treatment Selection from Interventional Data,qclNnbjxNJ
+ChebMoE: A Spectral-Aware and Expert-Adaptive Framework for Graph Anomaly Detection,HlQtHRjh5O
+CheckMate! Watermarking Graph Diffusion Models in Polynomial Time,92fliNrbxY
+Clone Deterministic 3D Worlds with Geometrically Regularized World Models,TLXp0scq3x
+CoDA: Agentic Systems for Collaborative Data Visualization,M4RKeHIAxw
+Combine-ICMH: A Dual-Adapter Co-Tuning Framework in Image Compression for Machine and Human Vision,brRjG5G9Qu
+Comparing AI Agents to Cybersecurity Professionals in Real-World Penetration Testing,Us00XndbVi
+Comprehend and Talk: Text to Speech Synthesis  via Dual Language Modeling,VPju7xAxb1
+Computational Bottlenecks for Denoising Diffusions,rAjHUNXybH
+ConDABench: Interactive Evaluation of Language Models for Data Analysis,jOxfpsnDFo
+Conjuring Semantic Similarity,Wf0tGnQOIh
+Consistent 3D Object Detection with Active LLM Reasoning,Zt5Tu3Xdvw
+Context Tuning for In-Context Optimization,ksxocXsFVh
+Context-aware Heterogeneous Graph-driven Multimodal Representation Learning for Emotion Recognition,twq5A3zdrH
+Continuous Control of LLM Text Generation via Probabilistic Prompting,QlueaQClYw
+Continuously Augmented Discrete Diffusion model for Categorical Generative Modeling,JNAZ3e7Bwt
+Control Tax: The Price of Keeping AI in Check,BpyR6Wkl1c
+Convergence Dynamics of Over-Parameterized Score Matching for a Single Gaussian,VDIH6L8ANo
+Convergence of Regret Matching in Potential Games and Constrained Optimization,EOV1q1U23N
+CounselBench: A Large-Scale Expert Evaluation and Adversarial Benchmarking of Large Language Models in Mental Health Question Answering,8MBYRZHVWT
+Counterfactual Techniques for Enhancing Customer Retention,pEtQaGUZVB
+Critical Confabulation: Can LLMs Hallucinate for Social Good?,wGFD7ITicm
+Cross-Modal Flows for Multimodal Generation,GtxAu3AogM
+Cultivating Pluralism In Algorithmic Monoculture: The Community Alignment Dataset,4NtoAVqfhA
+DBLP: Noise Bridge Consistency Distillation For Efficient And Reliable Adversarial Purification,60RXHBGag4
+DGNet: Self-Supervised Delta2Gamma Multi-Band EEG Representation Learning for Dementia Classification,0K4jNe8ik9
+Data Leakage Detection and De-duplication in Large Scale Geospatial Image Datasets,SB8xCvNFp7
+Debiased and Denoised Representation Learning for Incomplete Multi-view Clustering,Bp3I456do5
+DeepOPF-GAF: Graph Self-Attention Framework for N-1 Security-Constrained Optimal Power Flow,4eZqQ0Qs8u
+DiffWind: Physics-Informed Differentiable Modeling of Wind-Driven Object Dynamics,vKVzihkbQo
+Diffusion Blend: Inference-Time Multi-Preference Alignment for Diffusion Models,M2DXbwO8le
+Diffusion and Flow-based Copulas: Forgetting and Remembering Dependencies,YrX77XRgku
+DiffusionBlocks: Block-wise Neural Network Training via Diffusion Interpretation,pwVSmK71cS
+Discovering alternative solutions beyond the simplicity bias in recurrent neural networks,8fViWZ0yZJ
+Discovering and Steering Interpretable Concepts in Large Generative Music Models,mGtEoLYr9j
+Distilling Safe LLM Systems via Soft Prompts,4eVpczyaNx
+DuoLLM: A Dual-Stream Decoupled Visual Language Model for 3D Spatial Reasoning,2PjBGzP7mw
+Dynamic Cognitive Orchestration: Eliciting Metacognitive Planning in Large Language Models,1GoQe3r0Lv
+Dynamical properties of dense associative memory,TeDkzf34hs
+EVTAR: End-to-End Try on with Additional Unpaired Visual Reference,jPFjUehx4i
+Efficient algorithms for Incremental Metric Bipartite Matching,wnIanx0r0w
+EfficientLLM: Unified Pruning-Aware Pretraining for Auto-Designed Edge Language Models,zbNWwHLJFw
+EgoHandICL: Egocentric 3D Hand Reconstruction with In-Context Learning,nwjy9BeorI
+EgoTwin: Dreaming Body and View in First Person,QFJkvv3zMi
+Embedding Interpretability Score: A Domain-Agnostic Representation Quality Assessment,pFTfTJitMb
+Empirically Investigating the Trade-Offs in Deterministic Certified Training,GdcDEvh90X
+Ensemble Learning for AUC Maximization via Surrogate Loss,kbxjkoF42x
+Erased but Not Forgotten: How Backdoors Compromise Concept Erasure,jk7PL8GAV8
+Estimating Latent Regularization Parameters in Ill-Posed Problems with Semi-Definite Programming,e5sTFYhtqK
+Evolutionary Caching to Accelerate Your Off-the-Shelf Diffusion Model,z9MlGsQbzR
+ExAI5G: A Logic-Based Explainable AI Framework for Intrusion Detection in 5G Networks,nF7ORZfCLi
+Expanding Reasoning Potential in Foundation Model by Learning Diverse Chains of Thought Patterns,3FQV4JHPpY
+Exploratory Causal Inference in SAEnce,Ml8t8kQMUP
+FASA: FREQUENCY-AWARE SPARSE ATTENTION,FnSgecCEwg
+FERD: Fairness-Enhanced Data-Free Adversarial Robustness Distillation,jGXTx64gal
+FINDER: Feature Inference on Noisy Datasets using Eigenspace Residuals,Oe5Min0Na2
+Fair Decision Utility in Human-AI Collaboration: Interpretable Confidence Adjustment for Humans with Cognitive Disparities,hqq6GyYISN
+"False, misleading, and unfounded statements in a recent TPAMI publication",1CR1MTIgmq
+Fast and Stable Continual Test-Time Adaptation via Masked Modeling and Momentum-Guided Updates,FLmgVrgJo6
+"Fast to Train, Fast to Sample: Stable Velocity for Flow Matching",YiV2rJOIUJ
+Faster Gradient Methods for Highly-smooth Stochastic Bilevel Optimization,XIAta0WOJ6
+Feature-Level Adversarial Attack on Quantum Neural Networks,VgNs9dzyp6
+Federated Graph-Level Clustering Network with Dual Knowledge Separation,FwKFjBX0PK
+Few-Shot Paraphrase Generation with LLMs: An Empirical Study of Models and Hyperparameters,wjjqurlXvg
+Fine-Grained Iterative Adversarial Attacks with Limited Computation Budget,GW9sp1g9qh
+FineKB: Domain-Adaptive Issue Summarization and Cluster-Aware Retrieval for Support Knowledge Bases,NWXUpwHPP7
+Fisher Information for Robust Federated Cross-Validation,sZ3tjtN8AW
+FlowKV: Enhancing Multi-Turn Conversational Coherence in LLMs via Isolated Key-Value Cache Management,i0cjbEuezL
+Forecasting Diabetic Complications from Brazilian Billing Codes with Time-Aware Attention,yACLq4HoKi
+Formal Mechanistic Interpretability: Automated Circuit Discovery with Provable Guarantees,Timsb74vIY
+From Charts to Code: A Hierarchical Benchmark for Multimodal Models,oCkPzCR4f4
+From Past To Path: Masked History Learning for Next-Item Prediction in Generative Recommendation,zQqeMZEveG
+Gaia2: Benchmarking LLM Agents on Dynamic and  Asynchronous Environments,9gw03JpKK4
+Gaussian certified unlearning in high dimensions: A hypothesis testing approach,0FJYicpOj0
+GenCape: Structure-Inductive Generative Modeling for Category-Agnostic Pose Estimation,IVjs6vNDhV
+Generalizing Consistency Models for Fast Image-to-Image Translation,dR0M7PEyA6
+Generation Properties of Stochastic Interpolation under Finite Training Set,Bf6C60cqYU
+Gradient Flow Convergence Guarantee for General Neural Network Architectures,b36drMoKir
+Gym4ReaL: Towards Real-World Reference Environments for Reinforcement Learning,eqyyvNT7eS
+HSA: Head-wise Sparse Attention for Efficient and Accurate Long-context Inference,WytruI9uM3
+Half-order Fine-Tuning for Diffusion Model: A Recursive Likelihood Ratio Optimizer,AZ6lqcvHLX
+Harnessing Large Language Models Locally: Empirical Results and Implications,gtc8URMymz
+"Heads collapse, features stay: Why Replay needs big buffers",IdW0d0mRnG
+Hot PATE: Private Aggregation of Distributions  for Diverse Tasks,y8dVmQxKgb
+How Do Transformers Perform Two-Hop Reasoning in Context?,DPdev1Gg1o
+How Should We Evaluate LLM Reasoning Quality For Fact Verification?,ruh9H1Nwvr
+How to Square Tensor Networks and Circuits Without Squaring Them,gHPRSPxIsk
+Human Aligned Compression for Robust Models,AuzSDvSUzg
+IF-VidCap: Can Video Caption Models Follow Instructions?,lBXJexaC8a
+IL3D: A Large-Scale Indoor Layout Dataset for LLM-Driven 3D Scene Generation,0oxkxG9cCo
+ILRe: Intermediate Layer Retrieval for Context Compression in Causal Language Models,GiI6tPrPAG
+Image Quality Assessment for Embodied AI,azj53PLJRL
+Improving Diffusion Models for Class-imbalanced Training Data via Capacity Manipulation,wSGle6ag5I
+Improving RAG Question Answering Generation with Synthetic Data,4UPTS9eA5E
+InclusiveVidPose: Bridging the Pose Estimation Gap for Individuals with Limb Deficiencies in Video-Based Motion,SyQqXAdWUq
+InfiMed-Foundation: Pioneering Advanced Multimodal Medical Models with Compute-Efficient Pre-Training and Multi-Stage Fine-Tuning,SboD1FBYdy
+Instance-Dependent Fixed-Budget Pure Exploration in Reinforcement Learning,xIycolc5Xw
+Joint Geometry–Appearance Human Reconstruction in a Unified Latent Space via Bridge Diffusion,htKfC79soD
+KANO: Kolmogorov-Arnold Neural Operator,2QmiKXfsIr
+LLM Pretraining with Continuous Concepts,wTGcb3DxOn
+LLM-Based Social Simulations Require a Boundary,1T1SE9xxAB
+LLM-ERM: Sample-Efficient Program Learning via LLM-Guided Search,ARWB0SNmFR
+LLM-JEPA: Large Language Models Meet Joint Embedding Predictive Architectures,GbXKPo9QfH
+LLMs Get Lost In Multi-Turn Conversation,VKGTGGcwl6
+La-Proteina: Atomistic Protein Generation via Partially Latent Flow Matching,RDerF20JYT
+Learn to Memorize: Optimizing LLM-based Agents with Adaptive Memory Framework,EQ3TwO84Cs
+Learning Dynamic Causal Graphs Under Parametric Uncertainty via Polynomial Chaos Expansions,4bnCXOtHTm
+Learning Semantic Anchors for Continual Generalized Category Discovery,rFmEPL6svs
+Learning an Image Editing Model without Image Editing Pairs,OHqZ61ZqNO
+Learning from Peers in Reasoning Models,qImzresc4C
+Learning on a Razor’s Edge: Identifiability and Singularity of Polynomial Neural Networks,L5jYWeycAx
+Learning to Interpret Weight Differences in Language Models,6As4wfTB77
+Learning to See Before Seeing: Demystifying LLM Visual Priors from Language Pre-training,pfw176o1YJ
+Learning with Dual-level Noisy Correspondence for Multi-modal Entity Alignment,mytIKuRsSE
+Less Is More: Clustered Cross-Covariance Control for Offline RL,drOy5wi6Qq
+Leverage Unlearning to Sanitize LLMs,6zcXThQIoR
+Lexicon-Aligned Prompting: A General Method for Dictionary-Guided Low-Resource Machine Translation,KuwPZXdHQi
+Lipschitz Bandits with Stochastic Delayed Feedback,dfoN64vP4Q
+LiveMoments: Reselected Key Photo Restoration in Live Photos via Reference-guided Diffusion,02mgFnnfqG
+LongLive: Real-time Interactive Long Video Generation,nCAODkpsPJ
+LoongRL: Reinforcement Learning for Advanced Reasoning over Long Contexts,o29E01Q6bv
+Lossless Vocabulary Reduction for Auto-Regressive Language Models,xAvqHtLVgz
+MMUDA: Towards Robust Sleep Staging with Multi-Source Multi-Channel Unsupervised Domain Adaptation,4ozxLQHt5F
+MOCHA: Multi-sample Omics Cohorts with Human Annotation,FkTEc3XEL6
+MRI2PET: Realistic PET Image Generation from MRI for Automated Inference of Brain Atrophy and Alzheimer’s,PMCD5pKglt
+MTG-RPD: Multimodal Trajectories Generation with Rule-Based Prior Diffusion for End-to-End Autonomous Driving,f2nxdOv1Uh
+MTSSRL-MD: Multi-Task Self-Supervised Representation Learning for EEG Signals across Multiple Datasets,qD4N15aL2W
+Marginal Flow: a flexible and efficient framework for density estimation,uP6RDWHcs7
+Massive Activations are the Key to Local Detail Synthesis in Diffusion Transformers,tOOAWDRjrb
+MaxCode: A Max-Reward Reinforcement Learning Framework for Automated Code Optimization,E4RYoWcbl2
+Mechanism of Task-oriented Information Removal in In-context Learning,VAv1rrPR1A
+MedGazeShift : Transferable Multimodal Adversarial Attacks for Diagnostic Misdirection in Vision-Language Models,J9qGnGOfuY
+MemGen: Weaving Generative Latent Memory for Self-Evolving Agents,vI56m4Iu4e
+Memorization or Interpolation? Detecting LLM Memorization through Input Perturbation Analysis,vkTl53bXMs
+Meta-Learning Theory-Informed Inductive Biases using Deep Kernel Gaussian Processes,7dvYWzOiEu
+Mitigating Hallucination in Vision-Language Model with Depth and Spatial-aware Key-Value Refinement,FHTt9ipAra
+Mixed-Curvature Tree-Sliced Wasserstein Distance,e439wJl5sT
+MoBE: Mixture-of-Basis-Experts for Compressing MoE-based LLMs,8RV6H50OSf
+MobileLLM-R1: Exploring the Limits of Sub-Billion Language Model Reasoners with Open Training Recipes,GMlZt4fZSY
+Model-agnostic Watermarked Image Restoration without Additional Training,4Lop9ReXBP
+Modern Hopfield Networks Cannot Solve $\mathsf{NC}^1$-Hard Problems,P0rW0xr3mT
+Multi-Domain Riemannian Graph Gluing for Building Graph Foundation Models,G3uNHQpP7J
+Multilevel Control Functional,Ahdsg2nkNH
+Multiple Token Divergence: Measuring and Steering In-Context Computation Density,Ch0MxMvNHz
+NUMBERS AS TEXT: COMPLEMENTARY DUAL- MODALITY EMBEDDINGS FOR TIME SERIES FORECASTING,wSUysJXv07
+Native Adaptive Solution Expansion for Diffusion-based Combinatorial Optimization,084SvT55yk
+Neural Graduated Assignment for Maximum Common Edge Subgraphs,ZVlTIyRe35
+Neural Message-Passing on Attention Graphs for Hallucination Detection,4twbqwV4br
+Neural Networks with Adaptive Activation Functions and their Application to the Solution of PDEs,fdjGPp1KPR
+Neural Posterior Estimation with Latent Basis Expansions,jsPQFNmnln
+NoLoRA: Nonlinear Low-Rank Adaptation for Parameter-Efficient Fine-Tuning,6vIc5PdqQV
+Numerical Sensitivity and Robustness: Exploring the Flaws of Mathematical Reasoning in Large Language Models,ZozCeC9rD4
+O-Forge: An LLM + Computer Algebra Framework for Asymptotic Analysis,SkmkGKEZ1U
+OCR-Reasoning Benchmark: Unveiling the True Capabilities of MLLMs in Complex Text-Rich Image Reasoning,aH7eyx64pC
+ORCaS: Unsupervised Depth Completion via Occluded Region Completion as Supervision,v2skNLbrfF
+Omni-Reward: Towards Generalist Omni-Modal Reward Modeling with Free-Form Preferences,9C4gVbPqSy
+OmniDrive:Towards Unified Next-Gen Controllable Multi-View Driving Video Generation with LLM-Guided World Model,dYW9MJyyK3
+OmniSTVG: Toward Spatio-Temporal Omni-Object Video Grounding,azcQJtcYTE
+On Rademacher Complexity-based Generalization Bounds for the Transformer Architecture,bo6cliXvPQ
+On residual network depth,IKy24F8tGn
+On the Limits of Sparse Autoencoders: A Theoretical Framework and Reweighted Remedy,DSOTgzeH3w
+On the Wasserstein Geodesic Principal Component Analysis of probability measures,OJupg4mDjS
+Online Test-Time Adaptation in Tabular Data with Minimal High-Certainty Samples,TA4R2GYA50
+Optimistic Task Inference for Behavior Foundation Models,m5byThUSNE
+Output Supervision Can Obfuscate the Chain of Thought,JTX0iqxBjk
+PAML: MoE-Based Partitioning and Merging Framework for Solving Large-scale Multi-task VRPs,Y74tGjpsjq
+"PDE Solvers Should Be Local: Fast, Stable Rollouts with Learned Local Stencils",Kmbtv3gMuM
+PRISM: A Unified and Generalizable Adversarial Robustness Evaluation Framework for LLM-based Classification,gkGLiuDFeB
+Panda: A pretrained forecast model for chaotic dynamics,DgnsohAUMn
+Plan-R1: Safe and Feasible Trajectory Planning as Language Modeling,uusTA1rBhR
+PriorGuide: Test-Time Prior Adaptation for Simulation-Based Inference,G4I23g5Ugh
+Probing Latent Knowledge Conflict for Faithful Retrieval-Augmented Generation,NhO6iEUISf
+ProofFlow: A Dependency Graph Approach to Faithful Proof Autoformalization,s9t2FJVsBH
+Prospective Decision Learning for Safe Exploration in Model-free Reinforcement Learning,kxVHb58g3J
+Pushing the limits of unconstrained machine-learned interatomic potentials,QihJMqm2aX
+QVGen: Pushing the Limit of Quantized Video Generative Models,XJXZXuTj11
+Quadratic Direct Forecast for Training Multi-Step Time-Series Forecast Models,vpO8n9AqEG
+Quotient-Space Diffusion Models,3JPAkwSVc4
+RAD3D-Prefix:  Anomaly-Aware Prefix Learning on Frozen LLM for 3D CT Image to Report Generation,FLXZOIDrli
+Reducing Symmetry Increase in Equivariant Neural Networks,dUgq4bLY4X
+"ReefNet: A Large-Scale, Taxonomically Enriched Dataset and Benchmark for Hard Coral Classification",aY6RcnTH4v
+Referring Layer Decomposition,AlgRVfd1z7
+Reforming the Mechanism: Editing Reasoning Patterns in LLMs with Circuit Reshaping,Af16P0ODP6
+RelEval: A Structured Benchmark for Logical and Relational Reasoning in LLMs,CkrqfhD4fV
+Reliable Detection of Autism Spectrum Disorder in Children Using Conformal Prediction,v8lXG3Z1PB
+Representational and Temporal Dynamics in Neural Decoding: Linear and Nonlinear Models for Position and Velocity Prediction,VlTHxRcP3A
+Rethinking Diffusion Model in High Dimension,OPFE1zPYbU
+Rethinking Graph-Based Document Classification: Learning Data-Driven Structures Beyond Heuristic Approaches,col1qqZUAk
+Rethinking the Gold Standard: Why Discrete Curvature Fails to Fully Capture Over-squashing in GNNs?,QYtmqCoilk
+Revela: Dense Retriever Learning via Language Modeling,e7pAjJZJWb
+Revisiting Dynamic Graphs from the Perspective of Time Series,ojVcsWXPpU
+Revisiting Nonstationary Kernel Design for Multi-Output Gaussian Processes,vFfujX5Ygn
+Reward-Focused Fine-tuning of Pocket-aware Diffusion Models via Direct Preference Optimization,U1ttMrMhig
+Robust Selective Activation with Randomized Temporal K-Winner-Take-All in Spiking Neural Networks for Continual Learning,uAkexWJ7dW
+SALVE: Sparse Autoencoder-Latent Vector Editing for Mechanistic Control of Neural Networks,tWe5owhOyU
+SEM: Reinforcement Learning For Search-Efficient Large Language Models,ibM9ZjUCiu
+SSG-ECPE: Semantics-Structured Generation with Alignment for Emotion-Cause Pair Extraction,qIbGpiNHhs
+STADE: Standard Deviation as a Pruning Metric,Vp9lqAzWok
+Safe Exploration via Policy Priors,JC8xYAADHL
+"Same model, better performance: the impact of shuffling on DNA Language Models benchmarking",ph9Pq45KLN
+Scaling Laws and Spectra of Shallow Neural Networks in the Feature Learning Regime,Q3yLIIkt7z
+Semantic Uncertainty Quantification of Hallucinations in LLMs: A Quantum Tensor Network Based Method,11kPIEkj75
+Sequences of Logits Reveal the Low Rank Structure of Language Models,gdZ6J5hZzF
+Signals of Trust: From Classification to Confidence,9HxITL2Xlo
+"Smooth Gradients, Stable Learning: Logits Convexity for Reinforcement Learning",Ybv4qufmuG
+SoLoPO: Unlocking Long-Context Capabilities in LLMs via Short-to-Long Preference Optimization,iiBjaiikJG
+Spatial CAPTCHA: Generatively Benchmarking Spatial Reasoning for Human-Machine Differentiation,8LAc5kzjhz
+Spatially and Temporally Guided Bayesian Optimization for Brain Effective Connectivity Learning from fMRI and EEG Data,81iTOKJbzZ
+StreamingThinker: Large Language Models Can Think While Reading,10Iiew095e
+Structural Inference: Interpreting Small Language Models with Susceptibilities,J4GYMiE3JT
+Structure-Aware Bipartite Representations for Efficient MILP Branching,1nbTSuIdQ7
+Supervised Fine-Tuning on Ambiguous Preference Pairs Boosts LLM Alignment,qBfeoNi3Ja
+Surpassing Cosine Similarity  for Multidimensional Comparisons:  Dimension Insensitive Euclidean Metric,4i66VARUHD
+Symmetry-Aware Bayesian Optimization via Max Kernels,zUbBaWAM1Q
+TD-MoE: Tensor Decomposition for MoE Models,D9cnZNZfxX
+TESA: Task-Agnostic Embedding of Scene Graphs using Vision Alignment,Omo8RAEqSS
+TIIF-Bench: How Does Your T2I Model Follow Your Instructions?,vm8lNKLfuo
+TNT: Improving Chunkwise Training for Test-Time Memorization,rajioNWfRs
+TaTToo: Tool-Grounded Thinking PRM for Test-Time Scaling in Tabular Reasoning,zc1ezBrr5m
+TabStruct: Measuring Structural Fidelity of Tabular Data,XOPH34Extq
+Talking Points: Describing and Localizing Pixels,FcGQVshxMP
+Temporal-Oriented Recipe for Transferring Large Vision-Language Model to Video Understanding,YgeeVE75TJ
+The Polar Express: Optimal Matrix Sign Methods and their Application to the Muon Algorithm,yRtgZ1K8hO
+The Spacetime of Diffusion Models: An Information Geometry Perspective,qCsbYJZRA5
+The Unseen Bias: How Norm Discrepancy in Pre-Norm MLLMs Leads to  Visual  Information Loss,GVVNG2EMQv
+Theoretical Analysis of Contrastive Learning under Imbalanced Data: From Training Dynamics to a Pruning Solution,DUXG9E8dEO
+ThinkOmni: Lifting Textual Reasoning to Omni-modal Scenarios via Guidance Decoding,pMpCOjzwI1
+Thinking with Camera: A Unified Multimodal Model for Camera-Centric Understanding and Generation,5THcDkGGjt
+TiViT: Time Series Representations Lie Hidden in Pretrained Vision Transformers,2xEvtVALpg
+Token-Importance Guided Direct Preference Optimization,cMEnMVvMw9
+Toward Principled Flexible Scaling for Self-Gated Neural Activation,XGODWn7HeJ
+Toward Reliable Domain Adaptation under Continuous Spurious Shift,pUEAy4Ibjh
+Towards Robust Out-of-Distribution Generalization for Deep Neural Networks with Tailored Data Regularization,9eBYO45Fcx
+Towards Understanding the Nature of Attention with Low-Rank Sparse Decomposition,9A2etpDFIB
+Towards demystifying the optimization landscape of RLVR methods,8gk7qmKSRv
+TrajFlow: Nation-wide Pseudo GPS Trajectory Generation with Flow Matching Models,BDOldEjwCE
+Transfer Learning in Infinite Width Feature Learning Networks,Oox4QOhmi9
+Tree-sliced Sobolev IPM,HHNQSXaLkF
+Triple-S: A Sticker Semantic Similarity Benchmark with General Sticker Encoder,fOmX9aaQD3
+True Self-Supervised Novel View Synthesis is Transferable,aJJppqAm6r
+Two Sides of the Same Optimization Coin: Model Degradation and Representation Collapse in Graph Foundation Models,0BD2dCM4Ig
+Two failure modes of deep transformers and how to avoid them: a unified theory of signal propagation at initialisation,utSqpxQHXq
+UAVDB: Point-Guided Masks for UAV Detection and Segmentation,bpD4wXVFXV
+Ultra-Fast Language Generation via Discrete Diffusion Divergence Instruct,mtdyZsa47V
+Uncertainty Quantification Revisited: Conditional Cross-Entropy for Neural Classifiers,PuA3aQAMIo
+Understanding Weak-to-Strong Generalization: A Spectral Analysis,bzhCJQz35M
+UniLat3D: Geometry-Appearance Unified Latents for Single-Stage 3D Generation,Hxzjxu4y6A
+"Virtual Community: An Open World for Humans, Robots, and Society",Qo0OZZoTLh
+Visual Multi-Agent System: Mitigating Hallucination Snowballing via Visual Flow,Ii4HBlERix
+Visual Reasoning via Perceptual Extension and In-Context Learning,kXaKh8HJsN
+VoMP: Predicting Volumetric Mechanical Property Fields,aTP1IM6alo
+WebArena Verified,CSIo4D7xBG
+When Greedy Wins: Emergent Exploitation Bias in Meta-Bandit LLM Training,ZRO79e2BHI
+When Scores Learn Geometry: Rate Separations under the Manifold Hypothesis,34V0IZytle
+Why Adversarially Train Diffusion Models?,lL6htAaolp
+Why Keep Your Doubts to Yourself? Trading Visual Uncertainties among Vision-Language Models,zeqCjGQB4U
+"XTalker: Turn, Smile, and Speak in Controllable Talking Portrait Animation",DEWB8yCoOu
+iGRPO: Self‑Feedback–Driven LLM Reasoning,l6uUFUKWHw
+pi-Flow: Policy-Based Few-Step Generation via Imitation Distillation,1vAte8dsap

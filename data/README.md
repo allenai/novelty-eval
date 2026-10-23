@@ -30,6 +30,8 @@ ai-only/                        stronger vs. weaker ideator, both LLM-generated 
 
 expert-annotations/
   judge_errors.csv              judge mistakes re-judged blind by a domain expert
+
+openreview_forum_ids.csv        OpenReview forum ID of every ICLR paper above, by title
 ```
 
 `_plan` variants hold the same ideas rewritten into a two-field plan (purpose,
@@ -120,7 +122,7 @@ using the prompt templates in
 | `shown_A_idea`, `shown_B_idea` in `judge_errors.csv` | Copied from the files above | As above |
 | `predicted` in `judge_errors.csv` | Model verdict | The model in `judge_model` |
 | `annotation`, `annotation_reasoning` in `judge_errors.csv` | Human expert | — |
-| `metadata.title` of human ideas, `context`, `metadata.rating`, `metadata.contribution` | OpenReview | — |
+| `metadata.title` of human ideas, `context`, `metadata.rating`, `metadata.contribution`, `forum_id` in `openreview_forum_ids.csv` | OpenReview | — |
 | `metadata.title` of generated ideas, `label`, `metadata.type`, `expected_winners` | Assigned by our pipeline | — |
 
 ## OpenReview attribution
@@ -133,3 +135,17 @@ Weaknesses section.
 
 Reviews on OpenReview are anonymous. These files contain no reviewer names or other
 reviewer metadata.
+
+## Papers and removal requests
+
+Papers are identified by their OpenReview forum ID: `openreview_forum_ids.csv` maps each
+paper's `metadata.title` to its forum (`https://openreview.net/forum?id=<forum_id>`). It was
+built with [fetch_forum_ids.py](../scripts/hf/fetch_forum_ids.py). These files store no author
+names.
+
+If you are an author of a paper in these files and would like it removed, email the first
+author (see [Authors](../README.md#authors)) with the paper's forum ID. We will remove every
+instance that contains the paper from these files and from the
+[Hugging Face dataset](https://huggingface.co/datasets/noystl/novelty-judge-bench), and add its
+title to [paper_blocklist.yaml](../src/novelty_eval/benchmark_data/paper_blocklist.yaml) so that
+rebuilding the benchmark does not bring it back.

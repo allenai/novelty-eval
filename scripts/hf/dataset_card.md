@@ -113,6 +113,7 @@ print(ds[0]["idea"], ds[0]["label"])
 | `label` | string | `POSITIVE` (`D_+`, novel) or `NEGATIVE` (`D_-`, lower-novelty) — the ground truth |
 | `idea_source` | string | `human` (an ICLR submission) or `generated` (LLM ideator output) |
 | `title` | string | Submission title, or a synthetic identifier for generated ideas |
+| `forum_id` | string | The submission's OpenReview forum ID (`https://openreview.net/forum?id=<forum_id>`); `null` for generated ideas |
 | `rating` | float64 | Mean reviewer rating; `null` for generated ideas |
 | `contribution` | float64 | Mean reviewer contribution score; `null` for generated ideas |
 | `positive_signals` | list[string] | Reviewer excerpts praising originality |
@@ -129,6 +130,7 @@ print(ds[0]["idea"], ds[0]["label"])
 | `label_a`, `label_b` | string | `POSITIVE` / `NEGATIVE` for each side |
 | `idea_source_a`, `idea_source_b` | string | `human` or `generated` |
 | `title_a`, `title_b` | string | Per-side titles |
+| `forum_id_a`, `forum_id_b` | string | Per-side OpenReview forum IDs; `null` if generated |
 | `rating_a`, `rating_b` | float64 | Per-side mean reviewer rating; `null` if generated |
 | `contribution_a`, `contribution_b` | float64 | Per-side mean contribution score; `null` if generated |
 | `positive_signals_a/_b` | list[string] | Per-side reviewer excerpts praising originality |
@@ -194,7 +196,7 @@ using the prompt templates published in the
 | `idea` / `idea_a` / `idea_b`, where `idea_source` is `human` (abstract configs) | Human abstract, edited by a model | Claude Opus 4.6 |
 | `idea` / `idea_a` / `idea_b` in `*_plan` configs | Model rewrite of the abstract-form idea | Claude Opus 4.6 |
 | `positive_signals*`, `negative_signals*` | Verbatim reviewer text, selected by a model | Claude Opus 4.6 (selection only) |
-| `title*` of human ideas, `iclr_area`, `rating*`, `contribution*` | OpenReview | — |
+| `title*` of human ideas, `forum_id*`, `iclr_area`, `rating*`, `contribution*` | OpenReview | — |
 | `title*` of generated ideas, `label*`, `expected_winner`, `idea_source*`, `id` | Assigned by our pipeline | — |
 
 ## OpenReview attribution
@@ -207,6 +209,17 @@ Weaknesses section.
 
 Reviews on OpenReview are anonymous. This dataset contains no reviewer names or other
 reviewer metadata.
+
+## Papers and removal requests
+
+Papers are identified by their OpenReview forum ID (`forum_id*`). The dataset stores no author
+names.
+
+If you are an author of a paper in this dataset and would like it removed, email the first
+author (see [Authors](#authors)) with the paper's forum ID. We will remove every instance that
+contains the paper from this dataset and from the
+[code repository](https://github.com/allenai/novelty-eval), and add it to the pipeline's
+blocklist so that rebuilding the benchmark does not bring it back.
 
 ## License
 

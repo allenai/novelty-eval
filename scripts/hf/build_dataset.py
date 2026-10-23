@@ -20,6 +20,7 @@ scripts/hf/upload.sh runs this and pushes the result to the Hub.
 """
 
 import argparse
+import csv
 import shutil
 from pathlib import Path
 
@@ -65,6 +66,9 @@ UNRELEASED_DIR = "ai-only"
 # left out of the release rather than shipped half-built.
 DROPPED_FIELD = "similar_papers_mentioned"
 
+# Title -> OpenReview forum ID for every human paper, written by fetch_forum_ids.py.
+FORUM_IDS_FILE = "openreview_forum_ids.csv"
+
 NOT_APPLICABLE = "N/A"
 STR_LIST = pa.list_(pa.string())
 
@@ -76,6 +80,7 @@ POINTWISE_SCHEMA = pa.schema(
         ("label", pa.string()),
         ("idea_source", pa.string()),
         ("title", pa.string()),
+        ("forum_id", pa.string()),
         ("rating", pa.float64()),
         ("contribution", pa.float64()),
         ("positive_signals", STR_LIST),
@@ -93,6 +98,7 @@ PAIRWISE_SCHEMA = pa.schema(
             ("label", pa.string()),
             ("idea_source", pa.string()),
             ("title", pa.string()),
+            ("forum_id", pa.string()),
             ("rating", pa.float64()),
             ("contribution", pa.float64()),
             ("positive_signals", STR_LIST),
@@ -143,11 +149,15 @@ def check_metadata(metadata: dict, context: str, where: str) -> None:
     assert not metadata["similar_papers_mentioned"], f"{where}: similar_papers_mentioned is populated"
 
 
-def flatten_metadata(metadata: dict, suffix: str = "") -> dict:
+def flatten_metadata(metadata: dict, forum_ids: dict[str, str], suffix: str = "") -> dict:
+    source = idea_source(metadata)
+    if source == "human":
+        assert metadata["title"] in forum_ids, f"no forum ID for {metadata['title']!r}; rerun fetch_forum_ids.py"
     return {
         f"label{suffix}": metadata["type"],
-        f"idea_source{suffix}": idea_source(metadata),
+        f"idea_source{suffix}": source,
         f"title{suffix}": metadata["title"],
+        f"forum_id{suffix}": forum_ids[metadata["title"]] if source == "human" else None,
         f"rating{suffix}": to_float(metadata["rating"]),
         f"contribution{suffix}": to_float(metadata["contribution"]),
         f"positive_signals{suffix}": list(metadata["positive_signals"]),
@@ -155,7 +165,7 @@ def flatten_metadata(metadata: dict, suffix: str = "") -> dict:
     }
 
 
-def convert_pointwise(data: dict, path: Path) -> list[dict]:
+def convert_pointwise(data: dict, path: Path, forum_ids: dict[str, str]) -> list[dict]:
     rows = []
     for key, instance in data.items():
         where = f"{path}:{key}"
@@ -166,7 +176,7 @@ def convert_pointwise(data: dict, path: Path) -> list[dict]:
         check_metadata(metadata, instance["context"], where)
         # 'type' is dropped on the way out; it never disagrees with 'label'.
         assert metadata["type"] == instance["label"], f"{where}: metadata.type != label"
-        flat = flatten_metadata(metadata)
+        flat = flatten_metadata(metadata, forum_ids)
         flat.pop("label")
         rows.append(
             {
@@ -180,7 +190,7 @@ def convert_pointwise(data: dict, path: Path) -> list[dict]:
     return rows
 
 
-def convert_pairwise(data: dict, path: Path) -> list[dict]:
+def convert_pairwise(data: dict, path: Path, forum_ids: dict[str, str]) -> list[dict]:
     rows = []
     for key, instance in data.items():
         where = f"{path}:{key}"
@@ -198,7 +208,7 @@ def convert_pairwise(data: dict, path: Path) -> list[dict]:
             metadata = instance["metadata"][index]
             check_metadata(metadata, instance["context"], f"{where}[{index}]")
             row[f"idea_{side}"] = instance["ideas"][index]
-            row.update(flatten_metadata(metadata, suffix=f"_{side}"))
+            row.update(flatten_metadata(metadata, forum_ids, suffix=f"_{side}"))
         assert row[f"label_{'ab'[winner]}"] == "POSITIVE", f"{where}: winner is not the POSITIVE idea"
         assert row[f"label_{'ba'[winner]}"] == "NEGATIVE", f"{where}: loser is not the NEGATIVE idea"
         rows.append(row)
@@ -257,6 +267,8 @@ def main() -> None:
     args = parser.parse_args()
 
     sources = resolve_configs(args.data_dir)
+    with open(args.data_dir / FORUM_IDS_FILE) as f:
+        forum_ids = {row["title"]: row["forum_id"] for row in csv.DictReader(f)}
 
     if args.out.exists():
         shutil.rmtree(args.out)
@@ -268,7 +280,7 @@ def main() -> None:
             data = yaml.safe_load(f)
         assert len(set(data)) == len(data), f"{path}: duplicate instance ids"
         convert = convert_pairwise if task_of(config) == "pairwise" else convert_pointwise
-        rows = convert(data, path)
+        rows = convert(data, path, forum_ids)
         schema = PAIRWISE_SCHEMA if task_of(config) == "pairwise" else POINTWISE_SCHEMA
         table = pa.Table.from_pylist(rows, schema=schema)
         pq.write_table(table, args.out / "data" / f"{config}.parquet", compression="zstd")
